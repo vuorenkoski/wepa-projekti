@@ -1,2 +1,2 @@
 # wepa-projekti
-Web-palvelinohjelmointi Java, 2021 -projektityö
+Web-palvelinohjelmointi Java, 2021 -projektityö (Lauri Vuorenkoski)
