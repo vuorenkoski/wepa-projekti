@@ -8,8 +8,8 @@
 
         <h1>Kakkosnelonen</h1>
 
-        <p><a th:href="@{/signup}">signup</a></p>
-        <p><a th:href="@{/login}">login</a></p>
+        Käyttäjä: <span th:text="${user.fullname}"></span>
+        <p><a th:href="@{/logout}">logout</a></p>
 
     </body>
 </html>
