@@ -1,5 +1,6 @@
 package projekti;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,11 +16,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 @Data
 public class MessageComment extends AbstractPersistable<Long> {
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Message message;
     
-    @NotEmpty
     private String comment;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Profile profile;
     
     private LocalDateTime date = LocalDateTime.now(); 
 }

@@ -19,14 +19,28 @@ public class MessageController {
     
     @PostMapping("/messages")
     public Message addMessage(@RequestBody Message message) {
-        message.setProfile(accountService.getCurrentProfile());
-        message = messageService.saveMessage(message);
-        return message;
+        if (message.getMessage().length()>0 && message.getMessage().length()<1024) {
+            message.setProfile(accountService.getCurrentProfile());
+            message = messageService.saveMessage(message);
+            return message;
+        }
+        return null;
     }
     
-    @GetMapping("/users/{profile}/messages")
-    public List<Message> getMessages(@PathVariable String profile) {
-        return messageService.getMessages(accountService.getProfile(profile));
+    @GetMapping("/messages")
+    public List<Message> getMessages() {
+        return messageService.getMessages(accountService.getCurrentProfile());
+    }
+    
+    @PostMapping("/messages/{id}/comments")
+    public MessageComment addcomment(@RequestBody MessageComment messageComment, @PathVariable Long id) {
+        if (messageComment.getComment().length()>0 && messageComment.getComment().length()<255) {
+            messageComment.setProfile(accountService.getCurrentProfile());
+            messageComment.setMessage(messageService.getMessage(id));
+            messageComment = messageService.saveMessageComment(messageComment);
+            return messageComment;
+        }
+        return null;
     }
     
 }
