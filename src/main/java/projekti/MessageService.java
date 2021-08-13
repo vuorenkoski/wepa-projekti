@@ -1,6 +1,9 @@
 package projekti;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,9 @@ public class MessageService {
 
     @Autowired
     MessageLikeRepository messageLikeRepository;
-
+    
+    @Autowired
+    FollowerRepository followerRepository;
     
     public Message saveMessage(Message message) {
         message = messageRepository.save(message);
@@ -27,7 +32,13 @@ public class MessageService {
     }
     
     public List<Message> getMessages(Profile profile) {
-        return messageRepository.findByProfileOrderByDateDesc(profile);
+//        return messageRepository.findByProfileOrderByDateDesc(profile);
+        List<Message> messages = new ArrayList<>();
+        followerRepository.findByProfile(profile).stream()
+                .filter(x -> !x.isHidden()).map(x -> x.getFollow()).
+                map(x -> x.getMessages()).forEach(messages::addAll);
+        messages.addAll(messageRepository.findByProfileOrderByDateDesc(profile));
+        return messages.stream().sorted(Comparator.comparing(Message::getDate).reversed()).limit(25).collect(Collectors.toList());
     }
     
     public Message getMessage(Long id) {

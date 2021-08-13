@@ -5,24 +5,28 @@
         <title>Kakkosnelonen</title>
     </head>
     <body>
-        <h2>Rekisteröidy palveluun</h2>
-        <form method="POST" th:action="@{/signup}" th:object="${account}">
-            <table>
-                <tr>
-                    <td>Käyttäjätunnus</td>
-                    <td><input type="text" th:field="*{username}" /></td>
-                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Virheviesti</td>
-                </tr>
-                <tr>
-                    <td>Salasana</td>
-                    <td><input type="password" th:field="*{password}" /></td>
-                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Virheviesti</td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Lisää tili"/></td>
-                </tr>
-            </table>    
-        </form>
-        
+        <center>
+            <h1>Kakkosnelonen</h1>
+            <p><i>Navigare necesse est</i></p> 
+            <br/>
+            <h2>Rekisteröidy palveluun</h2>
+            <form method="POST" th:action="@{/signup}" th:object="${account}">
+                <table>
+                    <tr>
+                        <td>Käyttäjätunnus</td>
+                        <td><input type="text" th:field="*{username}" /></td>
+                        <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Virheviesti</td>
+                    </tr>
+                    <tr>
+                        <td>Salasana</td>
+                        <td><input type="password" th:field="*{password}" /></td>
+                        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Virheviesti</td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Lisää tili"/></td>
+                    </tr>
+                </table>    
+            </form>
+        </center>
     </body>
 </html>

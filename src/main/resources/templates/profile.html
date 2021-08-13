@@ -5,25 +5,32 @@
         <title>Kakkosnelonen</title>
     </head>
     <body>
+        <center>
+            <h1>Kakkosnelonen</h1>
+            <p><i>Navigare necesse est</i></p> 
+            <br/>
+            <h2>Muokkaa profiilia</h2>
+            <p>
+                Ennen käyttämistä sinun tulee kirjata nimesi ja profiilin tunnus.
+            </p>
 
-        <h2>Muokkaa profiilia</h2>
-
-        <form method="POST" th:action="@{/profile}" th:object="${profile}">
-            <table>
-                <tr>
-                    <td>Käyttäjän nimi</td>
-                    <td><input type="text" th:field="*{fullname}" /></td>
-                    <td th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Virheviesti</td>
-                </tr>
-                <tr>
-                    <td>Profiilin nimi</td>
-                    <td><input type="text" th:field="*{profilename}" /></td>
-                    <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Virheviesti</td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Päivitä"/></td>
-                </tr>
-            </table>    
-        </form>
+            <form method="POST" th:action="@{/profile}" th:object="${profile}">
+                <table>
+                    <tr>
+                        <td>Käyttäjän nimi</td>
+                        <td><input type="text" th:field="*{fullname}" /></td>
+                        <td th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Virheviesti</td>
+                    </tr>
+                    <tr>
+                        <td>Profiilin nimi</td>
+                        <td><input type="text" th:field="*{profilename}" /></td>
+                        <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Virheviesti</td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Päivitä"/></td>
+                    </tr>
+                </table>    
+            </form>
+        </center>
     </body>
 </html>

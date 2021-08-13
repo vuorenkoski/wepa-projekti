@@ -21,7 +21,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 public class Message extends AbstractPersistable<Long> {
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Profile profile;
     
     @NotEmpty

@@ -23,7 +23,7 @@ httpGetMessages.onreadystatechange = function() {
         return
     }
 
-    var root = document.getElementById("contents")
+    var root = document.getElementById("contents1")
 
     while (root.firstChild) {
       root.removeChild(root.lastChild);
