@@ -1,5 +1,6 @@
 package projekti;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 public class MessageLike extends AbstractPersistable<Long> {
     @ManyToOne
+    @JsonIgnore
     private Message message;
     
     @ManyToOne

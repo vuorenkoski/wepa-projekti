@@ -1,29 +1,29 @@
-var httpSend = new XMLHttpRequest()
+var httpSendMessages = new XMLHttpRequest()
 
 function sendMessage() {
     var data = {message: document.getElementById("newMessage").value}
-    httpSend.open("POST",contextRoot + "messages")
-    httpSend.setRequestHeader("Content-type", "application/json");
-    httpSend.send(JSON.stringify(data))  
+    httpSendMessages.open("POST",contextRoot + "messages")
+    httpSendMessages.setRequestHeader("Content-type", "application/json");
+    httpSendMessages.send(JSON.stringify(data))  
     document.getElementById("newMessage").value = ""
 }
 
-httpSend.onreadystatechange = function() {
+httpSendMessages.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
         return
     }
-    httpGet.open("GET",contextRoot + "messages")
-    httpGet.send()
+    httpGetMessages.open("GET",contextRoot + "messages")
+    httpGetMessages.send()
 }
 
-var httpGet = new XMLHttpRequest()
+var httpGetMessages = new XMLHttpRequest()
 
-httpGet.onreadystatechange = function() {
+httpGetMessages.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
         return
     }
 
-    var root = document.getElementById("messagelist")
+    var root = document.getElementById("contents")
 
     while (root.firstChild) {
       root.removeChild(root.lastChild);
@@ -52,7 +52,7 @@ httpGet.onreadystatechange = function() {
         dateNode.appendChild(document.createTextNode(formatDate(data[i].date)))
         var likesNode = document.createElement("div")
         likesNode.classList.add("col-sm-2")
-        likesNode.appendChild(document.createTextNode("xxx tykkäystä"))
+        likesNode.appendChild(document.createTextNode("" + data[i].numberOfLikes + " tykkäystä"))
         var buttonNode = document.createElement("div")
         buttonNode.classList.add("col-sm-2")
         var btn = document.createElement("input");
@@ -147,18 +147,21 @@ function addComments(root, commentdata) {
     }
 }
 
-httpGet.open("GET",contextRoot + "messages")
-httpGet.send()
+httpGetMessages.open("GET",contextRoot + "messages")
+httpGetMessages.send()
 
 function likeMessage(id) {
     console.log("tykkäys: " + id)
+    httpSendMessages.open("POST",contextRoot + "messages/" + id + "/likes")
+    httpSendMessages.setRequestHeader("Content-type", "application/json");
+    httpSendMessages.send() 
 }
 
 function addComment(id) {
     var data = {comment: document.getElementById("comment" + id).value}
-    httpSend.open("POST",contextRoot + "messages/" + id + "/comments")
-    httpSend.setRequestHeader("Content-type", "application/json");
-    httpSend.send(JSON.stringify(data))  
+    httpSendMessages.open("POST",contextRoot + "messages/" + id + "/comments")
+    httpSendMessages.setRequestHeader("Content-type", "application/json");
+    httpSendMessages.send(JSON.stringify(data))  
     document.getElementById("comment" + id).value = ""
 }
 

@@ -19,8 +19,9 @@ public class MessageController {
     
     @PostMapping("/messages")
     public Message addMessage(@RequestBody Message message) {
-        if (message.getMessage().length()>0 && message.getMessage().length()<255) {
+        if (message.getMessage().length()>0 && message.getMessage().length()<1023) {
             message.setProfile(accountService.getCurrentProfile());
+            message.setNumberOfLikes(0);
             message = messageService.saveMessage(message);
             return message;
         }
@@ -33,7 +34,7 @@ public class MessageController {
     }
     
     @PostMapping("/messages/{id}/comments")
-    public MessageComment addcomment(@RequestBody MessageComment messageComment, @PathVariable Long id) {
+    public MessageComment addComment(@RequestBody MessageComment messageComment, @PathVariable Long id) {
         if (messageComment.getComment().length()>0 && messageComment.getComment().length()<255) {
             messageComment.setProfile(accountService.getCurrentProfile());
             messageComment.setMessage(messageService.getMessage(id));
@@ -41,6 +42,11 @@ public class MessageController {
             return messageComment;
         }
         return null;
+    }
+
+    @PostMapping("/messages/{id}/likes")
+    public MessageLike addLike(@PathVariable Long id) {
+        return messageService.saveMessageLike(id, accountService.getCurrentProfile());
     }
     
 }

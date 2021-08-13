@@ -28,7 +28,11 @@ public class AccountService {
         if (auth instanceof AnonymousAuthenticationToken) {
             return null;
         }
-        return accountRepository.findByUsername(auth.getName()).getProfile();
+        Account acc = accountRepository.findByUsername(auth.getName());
+        if (acc == null) {
+            return null;
+        }
+        return acc.getProfile();
     }
     
     public boolean profileBelongsToCurrentAccount (String profilename) {

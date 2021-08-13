@@ -12,6 +12,9 @@ public class MessageService {
     @Autowired
     MessageCommentRepository messageCommentRepository;
 
+    @Autowired
+    MessageLikeRepository messageLikeRepository;
+
     
     public Message saveMessage(Message message) {
         message = messageRepository.save(message);
@@ -29,5 +32,19 @@ public class MessageService {
     
     public Message getMessage(Long id) {
         return messageRepository.getOne(id);
+    }
+    
+    public MessageLike saveMessageLike(Long messageid, Profile profile) {
+        Message message = this.getMessage(messageid);
+        if (messageLikeRepository.findByProfileAndMessage(profile, message).isEmpty()) {
+            MessageLike messageLike = new MessageLike();
+            messageLike.setMessage(message);
+            messageLike.setProfile(profile);
+            messageLike = messageLikeRepository.save(messageLike);
+            message.setNumberOfLikes(message.getNumberOfLikes() + 1);
+            messageRepository.save(message);
+            return messageLike;
+        }
+        return null;
     }
 }
