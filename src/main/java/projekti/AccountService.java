@@ -14,7 +14,7 @@ public class AccountService {
     
     @Autowired
     ProfileRepository profileRepository;
-    
+       
     public Account getCurrentAccount () {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
@@ -33,7 +33,7 @@ public class AccountService {
     
     public boolean profileBelongsToCurrentAccount (String profilename) {
         Profile p = profileRepository.findByProfilename(profilename);
-        return p.equals(this.getCurrentAccount().getProfile());
+        return p.equals(this.getCurrentProfile());
     }
     
     public Profile getProfile (String profilename) {

@@ -89,10 +89,11 @@ public class AccountController {
     
     @GetMapping("users/{profile}")
     public String main(@PathVariable String profile, Model model) {
-        if (!accountService.profileBelongsToCurrentAccount(profile)) {
+        Profile currentProfile = accountService.getCurrentProfile();
+        if (!currentProfile.getProfilename().equals(profile)) {
             return "redirect:/";
         }
-        model.addAttribute("user", accountService.getProfile(profile));
+        model.addAttribute("user", currentProfile);
         return "mainpage";
     }
 }

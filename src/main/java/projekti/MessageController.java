@@ -19,7 +19,7 @@ public class MessageController {
     
     @PostMapping("/messages")
     public Message addMessage(@RequestBody Message message) {
-        if (message.getMessage().length()>0 && message.getMessage().length()<1024) {
+        if (message.getMessage().length()>0 && message.getMessage().length()<255) {
             message.setProfile(accountService.getCurrentProfile());
             message = messageService.saveMessage(message);
             return message;
