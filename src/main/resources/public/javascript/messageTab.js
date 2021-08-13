@@ -29,9 +29,41 @@ httpGetMessages.onreadystatechange = function() {
       root.removeChild(root.lastChild);
     }
 
+    var newMessageRowNode = document.createElement("div")
+    newMessageRowNode.classList.add("row")
+    var newMessageColNode = document.createElement("div")
+    newMessageColNode.classList.add("col-sm-12")
+    newMessageRowNode.appendChild(newMessageColNode)
+    var textAreaRowNode = document.createElement("div")
+    textAreaRowNode.classList.add("row")
+    textAreaNode = document.createElement("textarea")
+    textAreaNode.setAttribute("id", "newMessage")
+    textAreaNode.setAttribute("rows", "4")
+    textAreaNode.setAttribute("cols", "50")
+    newMessageColNode.appendChild(textAreaNode)
+
+    var buttonRowNode = document.createElement("div")
+    buttonRowNode.classList.add("row")
+    var buttonColNode = document.createElement("div")
+    buttonColNode.classList.add("col-sm-12")
+    buttonRowNode.appendChild(buttonColNode)
+    var dbtn = document.createElement("input");
+    dbtn.setAttribute("type", "button")
+    dbtn.setAttribute("value", "Julkaise uusi viesti")
+    dbtn.setAttribute("onclick", "sendMessage()")
+    buttonColNode.appendChild(dbtn)
+
+    var emptyRowNode = document.createElement("div")
+    emptyRowNode.classList.add("row")
+    emptyRowNode.appendChild(document.createElement("br"))
+
+    root.appendChild(newMessageRowNode)
+    root.appendChild(buttonRowNode)
+    root.appendChild(emptyRowNode)
+
     var data = JSON.parse(this.responseText)
     for (i=0; i<data.length; i++) {
-        // Main container for messages
+        // Main container for message
         var mainRowNode = document.createElement("div")
         mainRowNode.classList.add("row")
         var mainColNode = document.createElement("div")
@@ -147,8 +179,11 @@ function addComments(root, commentdata) {
     }
 }
 
-httpGetMessages.open("GET",contextRoot + "messages")
-httpGetMessages.send()
+function messageTab() {
+    highlightNavlink("messageTab")
+    httpGetMessages.open("GET",contextRoot + "messages")
+    httpGetMessages.send()
+}
 
 function likeMessage(id) {
     console.log("tykkäys: " + id)
