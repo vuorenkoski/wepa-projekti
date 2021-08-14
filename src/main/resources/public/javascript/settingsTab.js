@@ -1,10 +1,12 @@
-var httpGetSettings = new XMLHttpRequest()
-
 function settingsTab() {
     highlightNavlink("settingsTab")
-    httpGetSettings.open("GET",contextRoot + "settings")
-    httpGetSettings.send()
     var root = document.getElementById("contents1")
-    root.innerHTML = "asetukset"
-}
 
+    var link = document.createElement("a")
+    link.href = "/profile"
+    link.innerHTML = "Muuta profiilin tietoja"
+    var linkRow = divElementWithChild("row", link)
+    root.appendChild(linkRow)
+    root.appendChild(emptyRow())
+    root.appendChild(emptyRow())
+}
