@@ -26,12 +26,17 @@ public class AccountController {
     }
   
     @GetMapping("/profile")
-    public String profile(@ModelAttribute Profile profile) {
-        Profile p = accountService.getCurrentAccount().getProfile();
+    public String profile(@ModelAttribute Profile profile, Model model) {
+        Account account = accountService.getCurrentAccount();
+        Profile p = account.getProfile();
         if (p != null) {
             profile.setFullname(p.getFullname());
             profile.setProfilename(p.getProfilename());
+            model.addAttribute("initial", false);
+        } else {
+            model.addAttribute("initial", true);
         }
+        model.addAttribute("username", account.getUsername());
         return "profile";
     }
 

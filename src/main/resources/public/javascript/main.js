@@ -7,6 +7,7 @@ function highlightNavlink(link) {
             links[i].classList.remove("active")
         }
     }
+    clearContents()
 }
 
 function divElementWithChild(classParameter, child) {
@@ -21,3 +22,13 @@ function emptyRow() {
     return divElementWithChild("row", element)
 }
 
+function clearContents() {
+    var element = document.getElementById("contents1")
+    while (element.firstChild) {
+      element.removeChild(element.lastChild);
+    }
+    element = document.getElementById("contents2")
+    while (element.firstChild) {
+      element.removeChild(element.lastChild);
+    }
+}

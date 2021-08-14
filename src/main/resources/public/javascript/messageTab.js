@@ -23,11 +23,9 @@ httpGetMessages.onreadystatechange = function() {
         return
     }
 
-    var root = document.getElementById("contents1")
+    clearContents()
 
-    while (root.firstChild) {
-      root.removeChild(root.lastChild);
-    }
+    var root = document.getElementById("contents1")
 
     var newMessageRowNode = document.createElement("div")
     newMessageRowNode.classList.add("row")
