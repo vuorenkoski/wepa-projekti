@@ -21,5 +21,3 @@ function emptyRow() {
     return divElementWithChild("row", element)
 }
 
-messageTab()
-

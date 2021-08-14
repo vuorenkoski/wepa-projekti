@@ -27,9 +27,16 @@ httpGetFollow.onreadystatechange = function() {
 
     var data = JSON.parse(this.responseText)
     for (i=0; i<data.length; i++) {
-       var user = document.createElement("div")
-       user.innerHTML = data[i].follow.fullname
-       root.appendChild(divElementWithChild("row", user))
+        var user = document.createElement("div")
+        user.innerHTML = data[i].follow.fullname + "&nbsp;&nbsp;--"
+        userRow = divElementWithChild("row", user)
+        var remove = document.createElement("div")
+        remove.innerHTML = "poista" 
+        remove.classList.add("removeColor")
+        remove.classList.add("mousePointer")
+        remove.setAttribute("onclick", "removeFollow(" + data[i].id + ")")
+        userRow.appendChild(remove)
+        root.appendChild(userRow)
     }
 
     var input = document.createElement("input")
@@ -64,10 +71,30 @@ httpGetFollowers.onreadystatechange = function() {
 
     var data = JSON.parse(this.responseText)
     for (i=0; i<data.length; i++) {
-        var user = document.createElement("div")
-        user.innerHTML = data[i].profile.fullname
-        var userRow = divElementWithChild("row", user)
-        root.appendChild(userRow)
+        console.log(data[i].hidden)
+        if (data[i].hidden) {
+            var user = document.createElement("del")
+            user.innerHTML = data[i].profile.fullname + "&nbsp;&nbsp;"
+            var userRow = divElementWithChild("row", user)
+            var remove = document.createElement("div")
+            remove.innerHTML = "poista esto"
+            remove.classList.add("removeColor")
+            remove.classList.add("mousePointer")
+            remove.setAttribute("onclick", "unhideFollower(" + data[i].id + ")")
+            userRow.appendChild(remove)
+            root.appendChild(userRow) 
+        } else {
+            var user = document.createElement("div")
+            user.innerHTML = data[i].profile.fullname + "&nbsp;&nbsp;"
+            var userRow = divElementWithChild("row", user)
+            var remove = document.createElement("div")
+            remove.innerHTML = "estä"
+            remove.classList.add("removeColor")
+            remove.classList.add("mousePointer")
+            remove.setAttribute("onclick", "hideFollower(" + data[i].id + ")")
+            userRow.appendChild(remove)
+            root.appendChild(userRow)
+        }
     }
 
     root.appendChild(emptyRow())
@@ -87,4 +114,21 @@ httpSendFollowers.onreadystatechange = function() {
     }
     httpGetFollow.open("GET",contextRoot + "follow")
     httpGetFollow.send()
+    httpGetFollowers.open("GET",contextRoot + "followers")
+    httpGetFollowers.send()
+}
+
+function removeFollow(id) {
+    httpSendFollowers.open("DELETE",contextRoot + "follow/" + id)
+    httpSendFollowers.send()  
+}
+
+function hideFollower(id) {
+    httpSendFollowers.open("POST",contextRoot + "follower/" + id + "/hide")
+    httpSendFollowers.send()  
+}
+
+function unhideFollower(id) {
+    httpSendFollowers.open("POST",contextRoot + "follower/" + id + "/unhide")
+    httpSendFollowers.send()  
 }
