@@ -197,8 +197,3 @@ function addComment(id) {
     httpSendMessages.send(JSON.stringify(data))  
     document.getElementById("comment" + id).value = ""
 }
-
-function formatDate(d) {
-    datestr = [d.slice(8, 10), d.slice(5, 7), d.slice(0, 4)].join(".")
-    return [datestr, "klo", d.slice(11,16)].join(" ")
-}

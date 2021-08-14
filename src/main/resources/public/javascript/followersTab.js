@@ -74,7 +74,7 @@ httpGetFollowers.onreadystatechange = function() {
         console.log(data[i].hidden)
         if (data[i].hidden) {
             var user = document.createElement("del")
-            user.innerHTML = data[i].profile.fullname + "&nbsp;&nbsp;"
+            user.innerHTML = data[i].profile.fullname + " (aloittanut" + formatDate(data[i].date) + ")&nbsp;&nbsp;" 
             var userRow = divElementWithChild("row", user)
             var remove = document.createElement("div")
             remove.innerHTML = "poista esto"
@@ -85,7 +85,7 @@ httpGetFollowers.onreadystatechange = function() {
             root.appendChild(userRow) 
         } else {
             var user = document.createElement("div")
-            user.innerHTML = data[i].profile.fullname + "&nbsp;&nbsp;"
+            user.innerHTML = data[i].profile.fullname + " (aloittanut " + formatDate(data[i].date) + ")&nbsp;&nbsp;" 
             var userRow = divElementWithChild("row", user)
             var remove = document.createElement("div")
             remove.innerHTML = "estä"
