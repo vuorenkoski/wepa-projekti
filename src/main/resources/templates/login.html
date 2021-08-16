@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head">
+        <meta charset="UTF-8" />
+        <title>Kakkosnelonen</title>
+    </head>
+    <body>
+                <header th:replace="fragments/layout :: header"></header>
+        
+        <div class="container" style="margin-top:30px">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" id="contents1">
+                            <center>
+                                <h3>Kirjaudu sisään</h3>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" id="contents2">
+                           <p>&nbsp;</p> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" id="contents2">
+                            <center>
+                                <form name='f' action="login" method='POST'>
+                                    <table>
+                                        <tr>
+                                            <td>Käyttäjätunnus</td>
+                                            <td><input type='text' name='username' value=''></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Salasana</td>
+                                            <td><input type='password' name='password' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input name="submit" type="submit" value="Kirjaudu"/></td>
+                                        </tr>
+                                    </table>    
+                                </form>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" id="contents2">
+                           <p>&nbsp;</p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <footer th:replace="fragments/layout :: footer"></footer>
+    </body>
+</html>

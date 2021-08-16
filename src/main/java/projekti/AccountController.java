@@ -101,4 +101,9 @@ public class AccountController {
         model.addAttribute("user", currentProfile);
         return "mainpage";
     }
+    
+    @GetMapping("login")
+    public String login() {
+        return "login";
+    }
 }

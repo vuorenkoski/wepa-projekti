@@ -36,7 +36,7 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/signup","/","/styles.css").permitAll()
                 .antMatchers("/h2-console","/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
-                .formLogin().permitAll().and()
+                .formLogin().loginPage("/login").permitAll().and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/");
     }
