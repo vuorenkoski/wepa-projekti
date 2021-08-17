@@ -17,7 +17,7 @@ public class MessageController {
     @Autowired
     MessageService messageService;
     
-    @PostMapping("/messages")
+    @PostMapping("/api/messages")
     public Message addMessage(@RequestBody Message message) {
         if (message.getMessage().length()>0 && message.getMessage().length()<1023) {
             message.setProfile(accountService.getCurrentProfile());
@@ -28,12 +28,12 @@ public class MessageController {
         return null;
     }
     
-    @GetMapping("/messages")
+    @GetMapping("/api/messages")
     public List<Message> getMessages() {
         return messageService.getMessages(accountService.getCurrentProfile());
     }
     
-    @PostMapping("/messages/{id}/comments")
+    @PostMapping("/api/messages/{id}/comments")
     public MessageComment addComment(@RequestBody MessageComment messageComment, @PathVariable Long id) {
         if (messageComment.getComment().length()>0 && messageComment.getComment().length()<255) {
             messageComment.setProfile(accountService.getCurrentProfile());
@@ -44,7 +44,7 @@ public class MessageController {
         return null;
     }
 
-    @PostMapping("/messages/{id}/likes")
+    @PostMapping("/api/messages/{id}/likes")
     public MessageLike addLike(@PathVariable Long id) {
         return messageService.saveMessageLike(id, accountService.getCurrentProfile());
     }

@@ -2,7 +2,7 @@ var httpSendMessages = new XMLHttpRequest()
 
 function sendMessage() {
     var data = {message: document.getElementById("newMessage").value}
-    httpSendMessages.open("POST",contextRoot + "messages")
+    httpSendMessages.open("POST",contextRoot + "api/messages")
     httpSendMessages.setRequestHeader("Content-type", "application/json");
     httpSendMessages.send(JSON.stringify(data))  
     document.getElementById("newMessage").value = ""
@@ -12,7 +12,7 @@ httpSendMessages.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
         return
     }
-    httpGetMessages.open("GET",contextRoot + "messages")
+    httpGetMessages.open("GET",contextRoot + "api/messages")
     httpGetMessages.send()
 }
 
@@ -179,20 +179,20 @@ function addComments(root, commentdata) {
 
 function messageTab() {
     highlightNavlink("messageTab")
-    httpGetMessages.open("GET",contextRoot + "messages")
+    httpGetMessages.open("GET",contextRoot + "api/messages")
     httpGetMessages.send()
 }
 
 function likeMessage(id) {
     console.log("tykkäys: " + id)
-    httpSendMessages.open("POST",contextRoot + "messages/" + id + "/likes")
+    httpSendMessages.open("POST",contextRoot + "api/messages/" + id + "/likes")
     httpSendMessages.setRequestHeader("Content-type", "application/json");
     httpSendMessages.send() 
 }
 
 function addComment(id) {
     var data = {comment: document.getElementById("comment" + id).value}
-    httpSendMessages.open("POST",contextRoot + "messages/" + id + "/comments")
+    httpSendMessages.open("POST",contextRoot + "api/messages/" + id + "/comments")
     httpSendMessages.setRequestHeader("Content-type", "application/json");
     httpSendMessages.send(JSON.stringify(data))  
     document.getElementById("comment" + id).value = ""
