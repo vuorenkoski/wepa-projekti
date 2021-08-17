@@ -2,6 +2,9 @@
   color: red;
 }
 
+.addColor {
+  color: green;
+}
 .mousePointer
 {
     cursor: pointer;

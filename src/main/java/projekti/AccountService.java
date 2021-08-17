@@ -1,5 +1,6 @@
 package projekti;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,8 +41,17 @@ public class AccountService {
         return p.equals(this.getCurrentProfile());
     }
     
-    public Profile getProfile (String profilename) {
-        return profileRepository.findByProfilename(profilename);
+//    public Profile getProfileByName (String profilename) {
+//        return profileRepository.findByProfilename(profilename);
+//    }
+    
+    public Profile getProfileById (Long id) {
+        return profileRepository.getOne(id);
+    }
+    
+    public List<Profile> searchProfiles (String searchTerm) {
+        List<Profile> profiles = profileRepository.findByFullnameContainingIgnoreCase(searchTerm);
+        return profiles;
     }
 
     public Account saveAccount(Account account) {

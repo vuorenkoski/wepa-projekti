@@ -18,26 +18,28 @@ public class FollowerController {
     @Autowired
     AccountService accountService;
       
-    @PostMapping("/follow")
-    public Follower addUserToFoollow(@RequestBody Profile profile) {
-        Profile follow = accountService.getProfile(profile.getProfilename());
+    @PostMapping("/api/follow/{id}")
+    public Follower addUserToFollow(@PathVariable Long id) {
+        Profile follow = accountService.getProfileById(id);
         Profile currentProfile = accountService.getCurrentProfile();
-        if (follow != null && !currentProfile.getProfilename().equals(profile.getProfilename())) {
-            Follower follower = new Follower();
-            follower.setProfile(accountService.getCurrentProfile());
-            follower.setFollow(follow);
-            follower.setHidden(false);
-            return followerRepository.save(follower);
+        if (follow != null && !currentProfile.getProfilename().equals(follow.getProfilename())) {
+            if (followerRepository.findByProfileAndFollow(currentProfile, follow).isEmpty()) {
+                Follower follower = new Follower();
+                follower.setProfile(accountService.getCurrentProfile());
+                follower.setFollow(follow);
+                follower.setHidden(false);
+                return followerRepository.save(follower);
+            }
         }
         return null;
     }
     
-    @GetMapping("/follow")
+    @GetMapping("/api/follow")
     public List<Follower> getUsersFollowed() {
         return followerRepository.findByProfile(accountService.getCurrentProfile());
     }
     
-    @DeleteMapping("/follow/{id}")
+    @DeleteMapping("/api/follow/{id}")
     public void deleteFollow(@PathVariable Long id) {
         Profile profile = accountService.getCurrentProfile();
         Follower follower = followerRepository.getOne(id);
@@ -46,12 +48,12 @@ public class FollowerController {
         }
     }
     
-    @GetMapping("/followers")
+    @GetMapping("/api/followers")
     public List<Follower> getFollowers() {
         return followerRepository.findByFollow(accountService.getCurrentProfile());
     }
     
-    @PostMapping("/follower/{id}/hide")
+    @PostMapping("/api/follower/{id}/hide")
     public void hideFollower(@PathVariable Long id) {
         Profile follow = accountService.getCurrentProfile();
         Follower follower = followerRepository.getOne(id);
@@ -61,7 +63,7 @@ public class FollowerController {
         }
     }
 
-    @PostMapping("/follower/{id}/unhide")
+    @PostMapping("/api/follower/{id}/unhide")
     public void unhideFollower(@PathVariable Long id) {
         Profile follow = accountService.getCurrentProfile();
         Follower follower = followerRepository.getOne(id);

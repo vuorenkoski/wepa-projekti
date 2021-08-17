@@ -1,5 +1,7 @@
 package projekti;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AccountController {
@@ -105,5 +109,11 @@ public class AccountController {
     @GetMapping("login")
     public String login() {
         return "login";
+    }
+    
+    @GetMapping("/api/profiles") 
+    @ResponseBody
+    public List<Profile> searchProfiles(@RequestParam String name) {
+        return accountService.searchProfiles(name).stream().limit(10).collect(Collectors.toList());
     }
 }

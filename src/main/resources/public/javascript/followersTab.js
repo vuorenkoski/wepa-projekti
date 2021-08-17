@@ -1,12 +1,35 @@
 var httpGetFollowers = new XMLHttpRequest()
 var httpGetFollow = new XMLHttpRequest()
+var httpGetProfiles = new XMLHttpRequest()
 var httpSendFollowers = new XMLHttpRequest()
+
+var followRoot = document.createElement("div")
+var profilesRoot = document.createElement("div")
+var followerRoot = document.createElement("div")
 
 function followersTab() {
     highlightNavlink("followersTab")
-    httpGetFollowers.open("GET",contextRoot + "followers")
+
+    var root = document.getElementById("contents1")
+    var rootRow = document.createElement("div")
+    rootRow.classList.add("row")
+    var followColumn = document.createElement("div")
+    followColumn.classList.add("col-sm-6")
+
+    followColumn.appendChild(divElementWithChild("row",followRoot))
+    followColumn.appendChild(divElementWithChild("row",profilesRoot))
+
+    followRoot.classList.add("col-sm-12")
+    profilesRoot.classList.add("col-sm-12")
+    followerRoot.classList.add("col-sm-6")
+
+    rootRow.appendChild(followColumn)
+    rootRow.appendChild(followerRoot)
+    root.appendChild(rootRow)
+
+    httpGetFollowers.open("GET",contextRoot + "api/followers")
     httpGetFollowers.send()
-    httpGetFollow.open("GET",contextRoot + "follow")
+    httpGetFollow.open("GET",contextRoot + "api/follow")
     httpGetFollow.send()
 }
 
@@ -15,15 +38,13 @@ httpGetFollow.onreadystatechange = function() {
         return
     }
 
-    var root = document.getElementById("contents1")
-
-    while (root.firstChild) {
-      root.removeChild(root.lastChild);
+    while (followRoot.firstChild) {
+      followRoot.removeChild(followRoot.lastChild);
     }
 
-    var followTitle = document.createElement("h5")
+    var followTitle = document.createElement("h4")
     followTitle.innerHTML = "Seurattavat käyttäjät"
-    root.appendChild(divElementWithChild("row", followTitle))
+    followRoot.appendChild(divElementWithChild("row", followTitle))
 
     var data = JSON.parse(this.responseText)
     for (i=0; i<data.length; i++) {
@@ -36,8 +57,9 @@ httpGetFollow.onreadystatechange = function() {
         remove.classList.add("mousePointer")
         remove.setAttribute("onclick", "removeFollow(" + data[i].id + ")")
         userRow.appendChild(remove)
-        root.appendChild(userRow)
+        followRoot.appendChild(userRow)
     }
+    followRoot.appendChild(emptyRow())
 
     var input = document.createElement("input")
     input.setAttribute("type", "text");
@@ -46,10 +68,36 @@ httpGetFollow.onreadystatechange = function() {
     row = divElementWithChild("row", input)
     var addButton = document.createElement("input");
     addButton.setAttribute("type", "button")
-    addButton.setAttribute("value", "Lisää seurattava")
-    addButton.setAttribute("onclick", "follow()")
+    addButton.setAttribute("value", "Hae seurattava")
+    addButton.setAttribute("onclick", "getProfiles()")
     row.appendChild(addButton)
-    root.appendChild(row)
+    followRoot.appendChild(row)
+    followRoot.appendChild(emptyRow())
+}
+
+httpGetProfiles.onreadystatechange = function() {
+    if (this.readyState!=4 || this.status!=200) {
+        return
+    }
+
+    while (profilesRoot.firstChild) {
+        profilesRoot.removeChild(profilesRoot.lastChild);
+    }
+
+    var data = JSON.parse(this.responseText)
+    for (i=0; i<data.length; i++) {
+        var user = document.createElement("div")
+        user.innerHTML = data[i].fullname + "&nbsp;&nbsp;--"
+        userRow = divElementWithChild("row", user)
+        var remove = document.createElement("div")
+        remove.innerHTML = "lisaa" 
+        remove.classList.add("addColor")
+        remove.classList.add("mousePointer")
+        remove.setAttribute("onclick", "follow(" + data[i].id + ")")
+        userRow.appendChild(remove)
+        profilesRoot.appendChild(userRow)
+    }
+    profilesRoot.appendChild(emptyRow())
 }
 
 httpGetFollowers.onreadystatechange = function() {
@@ -57,24 +105,19 @@ httpGetFollowers.onreadystatechange = function() {
         return
     }
 
-    var root = document.getElementById("contents2")
-
-    while (root.firstChild) {
-      root.removeChild(root.lastChild);
+    while (followerRoot.firstChild) {
+      followerRoot.removeChild(followerRoot.lastChild);
     }
 
-    root.appendChild(emptyRow())
-
-    var followTitle = document.createElement("h5")
+    var followTitle = document.createElement("h4")
     followTitle.innerHTML = "Seuraajat"
-    root.appendChild(divElementWithChild("row", followTitle))
+    followerRoot.appendChild(divElementWithChild("row", followTitle))
 
     var data = JSON.parse(this.responseText)
     for (i=0; i<data.length; i++) {
-        console.log(data[i].hidden)
         if (data[i].hidden) {
             var user = document.createElement("del")
-            user.innerHTML = data[i].profile.fullname + " (aloittanut" + formatDate(data[i].date) + ")&nbsp;&nbsp;" 
+            user.innerHTML = data[i].profile.fullname + " (aloittanut " + formatDate(data[i].date) + ")&nbsp;&nbsp;" 
             var userRow = divElementWithChild("row", user)
             var remove = document.createElement("div")
             remove.innerHTML = "poista esto"
@@ -82,7 +125,7 @@ httpGetFollowers.onreadystatechange = function() {
             remove.classList.add("mousePointer")
             remove.setAttribute("onclick", "unhideFollower(" + data[i].id + ")")
             userRow.appendChild(remove)
-            root.appendChild(userRow) 
+            followerRoot.appendChild(userRow) 
         } else {
             var user = document.createElement("div")
             user.innerHTML = data[i].profile.fullname + " (aloittanut " + formatDate(data[i].date) + ")&nbsp;&nbsp;" 
@@ -93,42 +136,44 @@ httpGetFollowers.onreadystatechange = function() {
             remove.classList.add("mousePointer")
             remove.setAttribute("onclick", "hideFollower(" + data[i].id + ")")
             userRow.appendChild(remove)
-            root.appendChild(userRow)
+            followerRoot.appendChild(userRow)
         }
     }
 
-    root.appendChild(emptyRow())
+    followerRoot.appendChild(emptyRow())
 }
 
-function follow() {
-    var data = {profilename: document.getElementById("profileName").value}
-    httpSendFollowers.open("POST",contextRoot + "follow")
-    httpSendFollowers.setRequestHeader("Content-type", "application/json");
-    httpSendFollowers.send(JSON.stringify(data))  
-    document.getElementById("profileName").value = ""
+function getProfiles() {
+    httpGetProfiles.open("GET",contextRoot + "api/profiles?name=" + document.getElementById("profileName").value)
+    httpGetProfiles.send()
+}
+
+function follow(id) {
+    httpSendFollowers.open("POST",contextRoot + "api/follow/" + id)
+    httpSendFollowers.send()
 } 
 
 httpSendFollowers.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
         return
     }
-    httpGetFollow.open("GET",contextRoot + "follow")
+    httpGetFollow.open("GET",contextRoot + "api/follow")
     httpGetFollow.send()
-    httpGetFollowers.open("GET",contextRoot + "followers")
+    httpGetFollowers.open("GET",contextRoot + "api/followers")
     httpGetFollowers.send()
 }
 
 function removeFollow(id) {
-    httpSendFollowers.open("DELETE",contextRoot + "follow/" + id)
+    httpSendFollowers.open("DELETE",contextRoot + "api/follow/" + id)
     httpSendFollowers.send()  
 }
 
 function hideFollower(id) {
-    httpSendFollowers.open("POST",contextRoot + "follower/" + id + "/hide")
+    httpSendFollowers.open("POST",contextRoot + "api/follower/" + id + "/hide")
     httpSendFollowers.send()  
 }
 
 function unhideFollower(id) {
-    httpSendFollowers.open("POST",contextRoot + "follower/" + id + "/unhide")
+    httpSendFollowers.open("POST",contextRoot + "api/follower/" + id + "/unhide")
     httpSendFollowers.send()  
 }
