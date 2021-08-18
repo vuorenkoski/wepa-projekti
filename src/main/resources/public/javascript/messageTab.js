@@ -60,7 +60,7 @@ httpGetMessages.onreadystatechange = function() {
     root.appendChild(emptyRowNode)
 
     var data = JSON.parse(this.responseText)
-    for (i=0; i<data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         // Main container for message
         var mainRowNode = document.createElement("div")
         mainRowNode.classList.add("row")
@@ -150,17 +150,22 @@ httpGetMessages.onreadystatechange = function() {
 }
 
 function addComments(root, commentdata) {
-    for (j=0; j<commentdata.length; j++) {
+    commentdata.sort(compareComments)
+    var k = 0
+    if (commentdata.length>10) {
+        k = commentdata.length - 10
+    }
+    for (var i = k; i < commentdata.length; i++) {
         var nameRowNode = document.createElement("div")
         nameRowNode.classList.add("row")
         var nameColNode = document.createElement("div")
         nameColNode.classList.add("col-sm-4")
         var nameNode = document.createElement("b")
-        nameNode.innerHTML = commentdata[j].profile.fullname
+        nameNode.innerHTML = commentdata[i].profile.fullname
         nameColNode.appendChild(nameNode)
         var dateColNode = document.createElement("div")
         dateColNode.classList.add("col-sm-4")
-        dateColNode.appendChild(document.createTextNode(formatDate(commentdata[j].date)))
+        dateColNode.appendChild(document.createTextNode(formatDate(commentdata[i].date)))
         nameRowNode.append(nameColNode)
         nameRowNode.append(dateColNode)
         root.appendChild(nameRowNode)
@@ -171,7 +176,7 @@ function addComments(root, commentdata) {
         messageColNode.classList.add("col-sm-12")
         messageRowNode.appendChild(messageColNode)
         var messageNode = document.createElement("p")
-        messageNode.innerHTML = commentdata[j].comment
+        messageNode.innerHTML = commentdata[i].comment
         messageColNode.appendChild(messageNode)
         root.appendChild(messageRowNode)
     }

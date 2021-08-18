@@ -37,3 +37,13 @@ function formatDate(d) {
     datestr = [d.slice(8, 10), d.slice(5, 7), d.slice(0, 4)].join(".")
     return [datestr, "klo", d.slice(11,16)].join(" ")
 }
+
+function compareComments(a,b) {
+    if (a.date < b.date){
+        return -1
+    }
+    if (a.date > b.date ){
+        return 1
+    }
+    return 0
+}

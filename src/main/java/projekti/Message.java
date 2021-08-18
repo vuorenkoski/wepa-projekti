@@ -34,6 +34,4 @@ public class Message extends AbstractPersistable<Long> {
     List<MessageComment> messageComments;
     
     private int numberOfLikes;
-//    @OneToMany(mappedBy = "message")
-//    List<MessageLike> messageLikes;
 }
