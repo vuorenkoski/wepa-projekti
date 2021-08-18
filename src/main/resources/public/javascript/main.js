@@ -10,6 +10,12 @@ function highlightNavlink(link) {
     clearContents()
 }
 
+function divElement(classParameter) {
+    var element = document.createElement("div")
+    element.classList.add(classParameter)
+    return element;
+}
+
 function divElementWithChild(classParameter, child) {
     var element = document.createElement("div")
     element.classList.add(classParameter)
@@ -46,4 +52,10 @@ function compareComments(a,b) {
         return 1
     }
     return 0
+}
+
+function clearNode(node) {
+    while (node.firstChild) {
+      node.removeChild(node.lastChild);
+    }
 }
