@@ -3,7 +3,6 @@ package projekti;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,16 +13,13 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageComment extends AbstractPersistable<Long> {
-
+public class PhotoLike extends AbstractPersistable<Long> {
     @ManyToOne
     @JsonIgnore
-    private Message message;
+    private Photo photo;
     
-    private String comment;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Profile profile;
     
-    private LocalDateTime date = LocalDateTime.now(); 
+    private LocalDateTime date = LocalDateTime.now();  
 }

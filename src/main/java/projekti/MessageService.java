@@ -32,7 +32,6 @@ public class MessageService {
     }
     
     public List<Message> getMessages(Profile profile) {
-//        return messageRepository.findByProfileOrderByDateDesc(profile);
         List<Message> messages = new ArrayList<>();
         followerRepository.findByProfile(profile).stream()
                 .filter(x -> !x.isHidden()).map(x -> x.getFollow()).

@@ -14,11 +14,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageComment extends AbstractPersistable<Long> {
+public class PhotoComment extends AbstractPersistable<Long> {
 
     @ManyToOne
     @JsonIgnore
-    private Message message;
+    private Photo photo;
     
     private String comment;
     
