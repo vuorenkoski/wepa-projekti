@@ -27,7 +27,7 @@ public class Profile extends AbstractPersistable<Long> {
     private String profilename;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "follow")
+    @OneToMany(mappedBy = "profile")
     private List<Follower> follows;
     
     @JsonIgnore

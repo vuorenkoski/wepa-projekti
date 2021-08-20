@@ -17,7 +17,7 @@
                         <a class="nav-link mousePointer" id="messageTab" onclick="messageTab()">Seinä</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mousePointer" id="photosTab" onclick="photosTab()">Kuva-albumi</a>
+                        <a class="nav-link mousePointer" id="photoTab" onclick="photoTab()">Kuva-albumi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mousePointer" id="followersTab" onclick="followersTab()">Seuraaminen</a>
@@ -50,8 +50,11 @@
         <script th:src="@{/javascript/main.js}"></script>
         <script th:src="@{/javascript/messageTab.js}"></script>
         <script th:src="@{/javascript/followersTab.js}"></script>
-        <script th:src="@{/javascript/photosTab.js}"></script>
-        <script th:src="@{/javascript/settingsTab.js}"></script>        
-        <script>messageTab()</script>
+        <script th:src="@{/javascript/photoTab.js}"></script>
+        <script th:src="@{/javascript/settingsTab.js}"></script> 
+        
+        <script th:if="${defaultTab == 'message'}">messageTab()</script>
+        <script th:if="${defaultTab == 'photo'}">photoTab()</script>
+        <script th:if="${defaultTab == 'settings'}">settingsTab()</script>
     </body>
 </html>

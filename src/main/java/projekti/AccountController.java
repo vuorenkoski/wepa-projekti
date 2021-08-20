@@ -103,6 +103,7 @@ public class AccountController {
             return "redirect:/";
         }
         model.addAttribute("user", currentProfile);
+        model.addAttribute("defaultTab", "message");
         return "mainpage";
     }
     
