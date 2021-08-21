@@ -95,7 +95,10 @@ httpGetPhotos.onreadystatechange = function() {
         var photoNode = document.createElement("img")
         photoNode.setAttribute("src", contextRoot + "api/photos/" + data[i].id)
         photoNode.setAttribute("width", "500")
-        photoColNode.appendChild(photoNode)
+        var photoLinkNode = document.createElement("a")
+        photoLinkNode.href = contextRoot + "api/photos/" + data[i].id
+        photoLinkNode.appendChild(photoNode)
+        photoColNode.appendChild(photoLinkNode)
         mainColNode.appendChild(photoRowNode)
 
         // Description row
@@ -106,9 +109,24 @@ httpGetPhotos.onreadystatechange = function() {
         descriptionColNode.appendChild(descriptionNode)
         mainColNode.appendChild(descriptionRowNode)
 
+        // Deletebutton
+        if (userId == data[i].profile.id) {
+            var deleteColNode = divElement("col-sm-12")
+            var deleteRowNode = divElementWithChild("row", deleteColNode)
+
+            var deleteNode = document.createElement("input");
+            deleteNode.setAttribute("type", "button")
+            deleteNode.setAttribute("value", "Poista kuva")
+            deleteNode.setAttribute("onclick", "deletePhoto("+ data[i].id + ")")
+            deleteColNode.appendChild(deleteNode)
+            mainColNode.appendChild(deleteRowNode)
+        }
+
         // container for comments
         var commentRootRowNode = divElement("row")
         var commentColNode = divElement("col-sm-11")
+        commentColNode.setAttribute("id", "comments" + data[i].id)
+
         commentRootRowNode.appendChild(divElement("col-sm-1"))
         commentRootRowNode.appendChild(commentColNode)
 
@@ -147,8 +165,13 @@ function photoTab() {
 }
 
 function likePhoto(id) {
-    console.log("tykkäys: " + id)
     httpSendPhotos.open("POST",contextRoot + "api/photos/" + id + "/likes")
+    httpSendPhotos.setRequestHeader("Content-type", "application/json");
+    httpSendPhotos.send() 
+}
+
+function deletePhoto(id) {
+    httpSendPhotos.open("DELETE",contextRoot + "api/photos/" + id)
     httpSendPhotos.setRequestHeader("Content-type", "application/json");
     httpSendPhotos.send() 
 }

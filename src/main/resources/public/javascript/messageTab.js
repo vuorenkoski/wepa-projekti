@@ -122,7 +122,6 @@ function messageTab() {
 }
 
 function likeMessage(id) {
-    console.log("tykkäys: " + id)
     httpSendMessages.open("POST",contextRoot + "api/messages/" + id + "/likes")
     httpSendMessages.setRequestHeader("Content-type", "application/json");
     httpSendMessages.send() 

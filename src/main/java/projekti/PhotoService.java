@@ -20,6 +20,9 @@ public class PhotoService {
     
     @Autowired
     FollowerRepository followerRepository;
+
+    @Autowired
+    AccountService accountService;
     
     public Photo savePhoto(Photo photo) {
         if (photoRepository.countByProfile(photo.getProfile()) < 10) {
@@ -42,8 +45,25 @@ public class PhotoService {
     }
     
     public Photo getPhoto(Long id) {
-        return photoRepository.getOne(id);
+        Photo photo = photoRepository.getOne(id);
+        Profile profile = accountService.getCurrentProfile();
+        if (photo.getProfile().equals(profile)) {
+            return photo;
+        }
+        List<Follower> follower = followerRepository.findByProfileAndFollow(profile, photo.getProfile());
+        if (!follower.isEmpty() && !follower.get(0).isHidden()) {
+           return photo; 
+        }
+        return null;
     }
+    
+    public Photo deletePhoto(Long id) {
+        Photo photo = photoRepository.getOne(id);
+        if (photo.getProfile().equals(accountService.getCurrentProfile())) {
+            photoRepository.delete(photo);
+        }
+        return null;
+    }    
     
     public PhotoLike savePhotoLike(Long photoid, Profile profile) {
         Photo photo = this.getPhoto(photoid);
