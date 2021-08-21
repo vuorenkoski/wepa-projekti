@@ -3,6 +3,7 @@ package projekti;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,7 @@ public class PhotoController {
         return photoService.getPhotos(accountService.getCurrentProfile());
     }
 
+    @Transactional
     @GetMapping(path = "/api/photos/{id}", produces = "image/jpg")
     public byte[] getPhotos(@PathVariable Long id) {
         return photoService.getPhoto(id).getImage();

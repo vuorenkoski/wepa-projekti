@@ -29,7 +29,6 @@ public class Photo extends AbstractPersistable<Long> {
     
     @Lob
     @JsonIgnore
-    @Type(type = "org.hibernate.type.ImageType")
     private byte[] image;
     
     private LocalDateTime date = LocalDateTime.now(); 
