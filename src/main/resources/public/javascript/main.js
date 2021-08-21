@@ -59,3 +59,27 @@ function clearNode(node) {
       node.removeChild(node.lastChild);
     }
 }
+
+function addComments(root, commentdata) {
+    commentdata.sort(compareComments)
+    var k = 0
+    if (commentdata.length>10) {
+        k = commentdata.length - 10
+    }
+    for (var i = k; i < commentdata.length; i++) {
+        var nameRowNode = divElement("row")
+        var nameNode = document.createElement("b")
+        nameNode.innerHTML = commentdata[i].profile.fullname
+        var nameColNode = divElementWithChild("col-sm-4", nameNode)
+        var dateColNode = divElementWithChild("col-sm-4", document.createTextNode(formatDate(commentdata[i].date)))
+        nameRowNode.append(nameColNode)
+        nameRowNode.append(dateColNode)
+        root.appendChild(nameRowNode)
+
+        var messageNode = document.createElement("p")
+        messageNode.innerHTML = commentdata[i].comment
+        var messageColNode = divElementWithChild("col-sm-12", messageNode)
+        var messageRowNode = divElementWithChild("row", messageColNode)
+        root.appendChild(messageRowNode)
+    }
+}

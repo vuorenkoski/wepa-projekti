@@ -100,7 +100,7 @@ httpGetMessages.onreadystatechange = function() {
         var cbtn = document.createElement("input");
         cbtn.setAttribute("type", "button")
         cbtn.setAttribute("value", "Lähetä kommentti")
-        cbtn.setAttribute("onclick", "addComment("+ data[i].id + ")")
+        cbtn.setAttribute("onclick", "addMessageComment("+ data[i].id + ")")
         newCommentRowNode.appendChild(cbtn)
         commentColNode.appendChild(newCommentRowNode)
 
@@ -112,30 +112,6 @@ httpGetMessages.onreadystatechange = function() {
         mainColNode.appendChild(emptyRow())
 
         root.appendChild(mainRowNode)
-    }
-}
-
-function addComments(root, commentdata) {
-    commentdata.sort(compareComments)
-    var k = 0
-    if (commentdata.length>10) {
-        k = commentdata.length - 10
-    }
-    for (var i = k; i < commentdata.length; i++) {
-        var nameRowNode = divElement("row")
-        var nameNode = document.createElement("b")
-        nameNode.innerHTML = commentdata[i].profile.fullname
-        var nameColNode = divElementWithChild("col-sm-4", nameNode)
-        var dateColNode = divElementWithChild("col-sm-4", document.createTextNode(formatDate(commentdata[i].date)))
-        nameRowNode.append(nameColNode)
-        nameRowNode.append(dateColNode)
-        root.appendChild(nameRowNode)
-
-        var messageNode = document.createElement("p")
-        messageNode.innerHTML = commentdata[i].comment
-        var messageColNode = divElementWithChild("col-sm-12", messageNode)
-        var messageRowNode = divElementWithChild("row", messageColNode)
-        root.appendChild(messageRowNode)
     }
 }
 
@@ -152,7 +128,7 @@ function likeMessage(id) {
     httpSendMessages.send() 
 }
 
-function addComment(id) {
+function addMessageComment(id) {
     var data = {comment: document.getElementById("comment" + id).value}
     httpSendMessages.open("POST",contextRoot + "api/messages/" + id + "/comments")
     httpSendMessages.setRequestHeader("Content-type", "application/json");

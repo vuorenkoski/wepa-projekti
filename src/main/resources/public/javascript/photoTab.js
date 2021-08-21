@@ -20,7 +20,6 @@ httpGetPhotos.onreadystatechange = function() {
     var root = document.getElementById("contents1")
 
     var addFormNode = document.createElement("form")
-    addFormNode.setAttribute("action", contextRoot + "api/photos")
     addFormNode.setAttribute("method", "POST")
     addFormNode.setAttribute("enctype", "multipart/form-data")
 
@@ -45,19 +44,18 @@ httpGetPhotos.onreadystatechange = function() {
     p.appendChild(addButtonNode)
     addFormNode.appendChild(p)
 
-//    addFormNode.submit(function(e){
-//        e.preventDefault()
-//        $.ajax({
-//            url: contextRoot + "api/photos",
-//           type: "post",
-//            data:addFormNode.serialize(),
-//            success:function(){
-//                // Whatever you want to do after the form is successfully submitted
-//            }
-//        });
-//    });
-    
-
+    addFormNode.addEventListener("submit", e => {
+        e.preventDefault()
+        const files = document.querySelector("[name=image]").files
+        const formData = new FormData()
+        formData.append("image", files[0])
+        formData.append("description", document.querySelector("[name=description]").value)
+        const xhr = new XMLHttpRequest()
+        xhr.onload = () => { photoTab() }
+        xhr.open("POST", contextRoot + "api/photos")
+        xhr.send(formData)
+    });
+  
     var newPhotoRowNode = divElementWithChild("row", divElementWithChild("col-sm-12", addFormNode))
 
     root.appendChild(newPhotoRowNode)
@@ -91,13 +89,22 @@ httpGetPhotos.onreadystatechange = function() {
         nameRowNode.appendChild(buttonNode)
         mainColNode.appendChild(nameRowNode)
 
-        // Photo row
+        // photo row
         var photoColNode = divElement("col-sm-12")
         var photoRowNode = divElementWithChild("row", photoColNode)
-        var photoNode = document.createElement("p")
-        photoNode.innerHTML = data[i].photo
+        var photoNode = document.createElement("img")
+        photoNode.setAttribute("src", contextRoot + "api/photos/" + data[i].id)
+        photoNode.setAttribute("width", "500")
         photoColNode.appendChild(photoNode)
         mainColNode.appendChild(photoRowNode)
+
+        // Description row
+        var descriptionColNode = divElement("col-sm-12")
+        var descriptionRowNode = divElementWithChild("row", descriptionColNode)
+        var descriptionNode = document.createElement("p")
+        descriptionNode.innerHTML = data[i].description
+        descriptionColNode.appendChild(descriptionNode)
+        mainColNode.appendChild(descriptionRowNode)
 
         // container for comments
         var commentRootRowNode = divElement("row")
@@ -118,7 +125,7 @@ httpGetPhotos.onreadystatechange = function() {
         var cbtn = document.createElement("input");
         cbtn.setAttribute("type", "button")
         cbtn.setAttribute("value", "Lähetä kommentti")
-        cbtn.setAttribute("onclick", "addComment("+ data[i].id + ")")
+        cbtn.setAttribute("onclick", "addPhotoComment("+ data[i].id + ")")
         newCommentRowNode.appendChild(cbtn)
         commentColNode.appendChild(newCommentRowNode)
 
@@ -130,30 +137,6 @@ httpGetPhotos.onreadystatechange = function() {
         mainColNode.appendChild(emptyRow())
 
         root.appendChild(mainRowNode)
-    }
-}
-
-function addComments(root, commentdata) {
-    commentdata.sort(compareComments)
-    var k = 0
-    if (commentdata.length>10) {
-        k = commentdata.length - 10
-    }
-    for (var i = k; i < commentdata.length; i++) {
-        var nameRowNode = divElement("row")
-        var nameNode = document.createElement("b")
-        nameNode.innerHTML = commentdata[i].profile.fullname
-        var nameColNode = divElementWithChild("col-sm-4", nameNode)
-        var dateColNode = divElementWithChild("col-sm-4", document.createTextNode(formatDate(commentdata[i].date)))
-        nameRowNode.append(nameColNode)
-        nameRowNode.append(dateColNode)
-        root.appendChild(nameRowNode)
-
-        var photoNode = document.createElement("p")
-        photoNode.innerHTML = commentdata[i].comment
-        var photoColNode = divElementWithChild("col-sm-12", photoNode)
-        var photoRowNode = divElementWithChild("row", photoColNode)
-        root.appendChild(photoRowNode)
     }
 }
 

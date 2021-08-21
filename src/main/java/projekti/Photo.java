@@ -1,5 +1,6 @@
 package projekti;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
@@ -25,6 +26,7 @@ public class Photo extends AbstractPersistable<Long> {
     private String description;
     
     @Lob
+    @JsonIgnore
     private byte[] image;
     
     private LocalDateTime date = LocalDateTime.now(); 

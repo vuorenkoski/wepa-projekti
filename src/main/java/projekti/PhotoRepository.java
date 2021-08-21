@@ -5,6 +5,10 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
+
     @EntityGraph(attributePaths = {"photoComments"})
-    List<Message> findByProfileOrderByDateDesc(Profile profile);
+    List<Photo> findByProfileOrderByDateDesc(Profile profile);
+    
+    long countByProfile(Profile profile);
+
 }

@@ -33,4 +33,8 @@ public class Profile extends AbstractPersistable<Long> {
     @JsonIgnore
     @OneToMany(mappedBy = "profile")
     private List<Message> messages;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "profile")
+    private List<Photo> photos;
 }

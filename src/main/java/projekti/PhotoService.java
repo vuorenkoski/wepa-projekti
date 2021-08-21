@@ -22,23 +22,23 @@ public class PhotoService {
     FollowerRepository followerRepository;
     
     public Photo savePhoto(Photo photo) {
-        photo = photoRepository.save(photo);
-        return photoRepository.save(photo);
+        if (photoRepository.countByProfile(photo.getProfile()) < 10) {
+            return photoRepository.save(photo);
+        }
+        return null;
     }
 
     public PhotoComment savePhotoComment(PhotoComment photoComment) {
-        photoComment = photoCommentRepository.save(photoComment);
         return photoCommentRepository.save(photoComment);
     }
     
     public List<Photo> getPhotos(Profile profile) {
-//        List<Photo> photos = new ArrayList<>();
-//        followerRepository.findByProfile(profile).stream()
-//                .filter(x -> !x.isHidden()).map(x -> x.getFollow()).
-//                map(x -> x.getPhotos()).forEach(photos::addAll);
-//        photos.addAll(photoRepository.findByProfileOrderByDateDesc(profile));
-//        return photos.stream().sorted(Comparator.comparing(Photo::getDate).reversed()).limit(25).collect(Collectors.toList());
-        return null;
+        List<Photo> photos = new ArrayList<>();
+        followerRepository.findByProfile(profile).stream()
+                .filter(x -> !x.isHidden()).map(x -> x.getFollow()).
+                map(x -> x.getPhotos()).forEach(photos::addAll);
+        photos.addAll(photoRepository.findByProfileOrderByDateDesc(profile));
+        return photos.stream().sorted(Comparator.comparing(Photo::getDate).reversed()).limit(25).collect(Collectors.toList());
     }
     
     public Photo getPhoto(Long id) {
