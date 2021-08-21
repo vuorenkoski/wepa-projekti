@@ -73,6 +73,7 @@ public class AccountController {
         Profile p = account.getProfile();
         
         if (p == null) {
+            profile.setPhoto_id(0L);
             profile = accountService.saveProfile(profile); 
             account.setProfile(profile);
             accountService.saveAccount(account);    
