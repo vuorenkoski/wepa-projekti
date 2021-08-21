@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class PhotoService {
         return photoCommentRepository.save(photoComment);
     }
     
+    @Transactional
     public List<Photo> getPhotos(Profile profile) {
         List<Photo> photos = new ArrayList<>();
         followerRepository.findByProfile(profile).stream()
@@ -44,6 +46,7 @@ public class PhotoService {
         return photos.stream().sorted(Comparator.comparing(Photo::getDate).reversed()).limit(25).collect(Collectors.toList());
     }
     
+    @Transactional
     public Photo getPhoto(Long id) {
         Photo photo = photoRepository.getOne(id);
         Profile profile = accountService.getCurrentProfile();
