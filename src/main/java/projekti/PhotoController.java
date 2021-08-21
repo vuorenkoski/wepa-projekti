@@ -1,7 +1,12 @@
 package projekti;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +44,12 @@ public class PhotoController {
     }
 
     @GetMapping(path = "/api/photos/{id}", produces = "image/jpg")
-    public byte[] getPhotos(@PathVariable Long id) {
-        return photoService.getPhoto(id).getImage();
+    public byte[] getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer height) throws IOException {
+        Photo photo = photoService.getPhoto(id);
+        if (height != null) {
+            return imageResize(photo.getImage(), height);
+        }
+        return photo.getImage();
     }
 
     @DeleteMapping(path = "/api/photos/{id}", produces = "image/jpg")
@@ -63,5 +72,20 @@ public class PhotoController {
     public PhotoLike addLike(@PathVariable Long id) {
         return photoService.savePhotoLike(id, accountService.getCurrentProfile());
     }
+    
+    private byte[] imageResize (byte[] image, int height) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(image);
+        BufferedImage bImage = ImageIO.read(bis);
+
+        int width = ((height * bImage.getWidth()) / bImage.getHeight());
+        Image resultingImage = bImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        BufferedImage outputImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+        
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(outputImage, "jpg", bos );
+      
+        return bos.toByteArray();
+    } 
     
 }
