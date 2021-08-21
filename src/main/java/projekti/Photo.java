@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -28,6 +29,7 @@ public class Photo extends AbstractPersistable<Long> {
     
     @Lob
     @JsonIgnore
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] image;
     
     private LocalDateTime date = LocalDateTime.now(); 
