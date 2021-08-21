@@ -68,6 +68,7 @@ public class PhotoService {
         return null;
     }    
     
+    @Transactional
     public PhotoLike savePhotoLike(Long photoid, Profile profile) {
         Photo photo = this.getPhoto(photoid);
         if (photoLikeRepository.findByProfileAndPhoto(profile, photo).isEmpty()) {
