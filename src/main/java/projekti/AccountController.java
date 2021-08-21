@@ -86,6 +86,7 @@ public class AccountController {
     
     @GetMapping("/")
     public String index() {
+        System.out.println("tässä ollaan");
         Account account = accountService.getCurrentAccount();
         if (account != null) {
             if (account.getProfile()!=null) {
@@ -116,5 +117,13 @@ public class AccountController {
     @ResponseBody
     public List<Profile> searchProfiles(@RequestParam String name) {
         return accountService.searchProfiles(name).stream().limit(10).collect(Collectors.toList());
+    }
+    
+    @PostMapping("/profile/photo")
+    @ResponseBody
+    public Profile addProfilePhoto(@RequestParam Long id) {
+        Profile profile = accountService.getCurrentProfile();
+        profile.setPhoto_id(id);
+        return accountService.saveProfile(profile);
     }
 }

@@ -40,11 +40,7 @@ public class AccountService {
         Profile p = profileRepository.findByProfilename(profilename);
         return p.equals(this.getCurrentProfile());
     }
-    
-//    public Profile getProfileByName (String profilename) {
-//        return profileRepository.findByProfilename(profilename);
-//    }
-    
+      
     public Profile getProfileById (Long id) {
         return profileRepository.getOne(id);
     }
@@ -59,7 +55,9 @@ public class AccountService {
     }
     
     public Profile saveProfile(Profile profile) {
-        return profileRepository.save(profile);
+        profile = profileRepository.save(profile);
+        profileRepository.flush();
+        return profile;
     }
     
     public boolean usernameExists(String username) {

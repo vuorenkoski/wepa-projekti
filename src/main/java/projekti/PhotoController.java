@@ -67,7 +67,7 @@ public class PhotoController {
         }
         return null;
     }
-
+   
     @PostMapping("/api/photos/{id}/likes")
     public PhotoLike addLike(@PathVariable Long id) {
         return photoService.savePhotoLike(id, accountService.getCurrentProfile());

@@ -26,6 +26,8 @@ public class Profile extends AbstractPersistable<Long> {
     @Pattern(regexp = "[a-z]*")
     private String profilename;
     
+    private Long photo_id;
+    
     @JsonIgnore
     @OneToMany(mappedBy = "profile")
     private List<Follower> follows;

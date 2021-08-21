@@ -1,4 +1,5 @@
 var httpSendPhotos = new XMLHttpRequest()
+var httpChangeProfile = new XMLHttpRequest()
 
 httpSendPhotos.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
@@ -6,6 +7,14 @@ httpSendPhotos.onreadystatechange = function() {
     }
     httpGetPhotos.open("GET",contextRoot + "api/photos")
     httpGetPhotos.send()
+}
+
+httpChangeProfile.onreadystatechange = function() {
+    if (this.readyState!=4 || this.status!=200) {
+        return
+    }
+    var id = JSON.parse(httpChangeProfile.response).photo_id
+    document.getElementById("profilePhoto").src=contextRoot + "api/photos/" + id + "?height=150"
 }
 
 var httpGetPhotos = new XMLHttpRequest()
@@ -110,15 +119,26 @@ httpGetPhotos.onreadystatechange = function() {
 
         // Deletebutton
         if (userId == data[i].profile.id) {
-            var deleteColNode = divElement("col-sm-12")
+            var deleteColNode = divElement("col-sm-3")
+            var profileColNode = divElement("col-sm-3")
             var deleteRowNode = divElementWithChild("row", deleteColNode)
+            deleteRowNode.appendChild(profileColNode)
 
             var deleteNode = document.createElement("input");
             deleteNode.setAttribute("type", "button")
             deleteNode.setAttribute("value", "Poista kuva")
             deleteNode.setAttribute("onclick", "deletePhoto("+ data[i].id + ")")
             deleteColNode.appendChild(deleteNode)
+
+            var profileNode = document.createElement("input");
+            profileNode.setAttribute("type", "button")
+            profileNode.setAttribute("value", "aseta profiilikuvaksi")
+            profileNode.setAttribute("onclick", "profilePhoto("+ data[i].id + ")")
+            profileColNode.appendChild(profileNode)
+
             mainColNode.appendChild(deleteRowNode)
+            mainColNode.appendChild(emptyRow())           
+
         }
 
         // container for comments
@@ -167,6 +187,12 @@ function likePhoto(id) {
     httpSendPhotos.open("POST",contextRoot + "api/photos/" + id + "/likes")
     httpSendPhotos.setRequestHeader("Content-type", "application/json");
     httpSendPhotos.send() 
+}
+
+function profilePhoto(id) {
+    httpChangeProfile.open("POST",contextRoot + "profile/photo/?id=" + id)
+    httpChangeProfile.setRequestHeader("Content-type", "application/json");
+    httpChangeProfile.send() 
 }
 
 function deletePhoto(id) {

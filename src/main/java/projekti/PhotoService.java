@@ -63,7 +63,9 @@ public class PhotoService {
     public Photo deletePhoto(Long id) {
         Photo photo = photoRepository.getOne(id);
         if (photo.getProfile().equals(accountService.getCurrentProfile())) {
-            photoRepository.delete(photo);
+            if (photo.getProfile().getPhoto_id() != photo.getId()) {
+                photoRepository.delete(photo);
+            }
         }
         return null;
     }    
