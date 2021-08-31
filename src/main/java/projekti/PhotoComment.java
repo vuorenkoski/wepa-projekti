@@ -1,6 +1,7 @@
 package projekti;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +18,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class PhotoComment extends AbstractPersistable<Long> {
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"profile", "description", "image", "date", "photoComments", "photoLikes", "numberOfLikes" })
     private Photo photo;
     
     private String comment;

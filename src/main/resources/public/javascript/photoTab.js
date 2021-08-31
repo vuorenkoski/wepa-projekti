@@ -1,4 +1,6 @@
 var httpSendPhotos = new XMLHttpRequest()
+var httpSendPhotoLike = new XMLHttpRequest()
+var httpSendPhotoComment = new XMLHttpRequest()
 var httpChangeProfile = new XMLHttpRequest()
 
 httpSendPhotos.onreadystatechange = function() {
@@ -7,6 +9,16 @@ httpSendPhotos.onreadystatechange = function() {
     }
     httpGetPhotos.open("GET",contextRoot + "api/photos")
     httpGetPhotos.send()
+}
+
+httpSendPhotoComment.onreadystatechange = function() {
+    if (this.readyState!=4 || this.status!=200) {
+        return
+    }
+
+    var data = JSON.parse(this.responseText)
+    console.log(data)
+    addComment(document.getElementById("commentsBlock" + data.photo.id), data)
 }
 
 httpChangeProfile.onreadystatechange = function() {
@@ -144,30 +156,31 @@ httpGetPhotos.onreadystatechange = function() {
         // container for comments
         var commentRootRowNode = divElement("row")
         var commentColNode = divElement("col-sm-11")
-        commentColNode.setAttribute("id", "comments" + data[i].id)
+        commentColNode.id = "commentsBlock" + data[i].id
 
         commentRootRowNode.appendChild(divElement("col-sm-1"))
         commentRootRowNode.appendChild(commentColNode)
 
-        // add all comments
         addComments(commentColNode, data[i].photoComments)
 
+        mainColNode.appendChild(commentRootRowNode)
+
         // new comment form
-        var newCommentRowNode = divElement("row")
+        var newCommentRow = divElement("row")       
         var newCommentNode = document.createElement("textarea")
         newCommentNode.setAttribute("id", "comment" + data[i].id)
         newCommentNode.setAttribute("rows", "1")
         newCommentNode.setAttribute("cols", "30")
-        newCommentRowNode.appendChild(newCommentNode)
+        newCommentRow.appendChild(newCommentNode)
         var cbtn = document.createElement("input");
         cbtn.setAttribute("type", "button")
         cbtn.setAttribute("value", "Lähetä kommentti")
         cbtn.setAttribute("onclick", "addPhotoComment("+ data[i].id + ")")
-        newCommentRowNode.appendChild(cbtn)
-        commentColNode.appendChild(newCommentRowNode)
+        newCommentRow.appendChild(cbtn)
 
-        // comment container to main container
-        mainColNode.appendChild(commentRootRowNode)
+        var newCommentRowBlock = divElementWithChild("row", divElement("col-sm-1"))
+        newCommentRowBlock.appendChild(divElementWithChild("col-sm-11", newCommentRow))
+        mainColNode.appendChild(newCommentRowBlock)
 
         // extra empty rows at the end
         mainColNode.appendChild(emptyRow())
@@ -203,9 +216,9 @@ function deletePhoto(id) {
 
 function addPhotoComment(id) {
     var data = {comment: document.getElementById("comment" + id).value}
-    httpSendPhotos.open("POST",contextRoot + "api/photos/" + id + "/comments")
-    httpSendPhotos.setRequestHeader("Content-type", "application/json");
-    httpSendPhotos.send(JSON.stringify(data))  
+    httpSendPhotoComment.open("POST",contextRoot + "api/photos/" + id + "/comments")
+    httpSendPhotoComment.setRequestHeader("Content-type", "application/json");
+    httpSendPhotoComment.send(JSON.stringify(data))  
     document.getElementById("comment" + id).value = ""
 }
 
