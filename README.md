@@ -9,7 +9,6 @@ Toteutuskielet: Java ja Javascript
 
 ## tasks
 
-- photos väliseinän päivitys
 - virheilmoitukset -väärät syötteet
 - virheilmoitukset -väärät http pyynnöt
 - turvallisuustestaus

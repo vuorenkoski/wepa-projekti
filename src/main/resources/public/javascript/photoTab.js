@@ -17,8 +17,17 @@ httpSendPhotoComment.onreadystatechange = function() {
     }
 
     var data = JSON.parse(this.responseText)
-    console.log(data)
     addComment(document.getElementById("commentsBlock" + data.photo.id), data)
+}
+
+httpSendPhotoLike.onreadystatechange = function() {
+    if (this.readyState!=4 || this.status!=200) {
+        return
+    }
+
+    var photo = JSON.parse(this.responseText)
+    console.log(photo)
+    document.getElementById("likesNode" + photo.id).innerHTML = "" + photo.numberOfLikes + " tykkäystä"
 }
 
 httpChangeProfile.onreadystatechange = function() {
@@ -96,7 +105,10 @@ httpGetPhotos.onreadystatechange = function() {
         var nameNode = divElementWithChild("col-sm-4", name)
 
         var dateNode = divElementWithChild("col-sm-4", document.createTextNode(formatDate(data[i].date)))
-        var likesNode = divElementWithChild("col-sm-2", document.createTextNode("" + data[i].numberOfLikes + " tykkäystä"))
+        var likesText = document.createElement("div")
+        likesText.innerHTML = "" + data[i].numberOfLikes + " tykkäystä"
+        likesText.id = "likesNode" + data[i].id
+        var likesNode = divElementWithChild("col-sm-2", likesText)
 
         var btn = document.createElement("input");
         btn.setAttribute("type", "button")
@@ -197,9 +209,9 @@ function photoTab() {
 }
 
 function likePhoto(id) {
-    httpSendPhotos.open("POST",contextRoot + "api/photos/" + id + "/likes")
-    httpSendPhotos.setRequestHeader("Content-type", "application/json");
-    httpSendPhotos.send() 
+    httpSendPhotoLike.open("POST",contextRoot + "api/photos/" + id + "/likes")
+    httpSendPhotoLike.setRequestHeader("Content-type", "application/json");
+    httpSendPhotoLike.send() 
 }
 
 function profilePhoto(id) {

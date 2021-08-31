@@ -21,7 +21,7 @@
                                 <div th:if="${user.photo_id > 0}">
                                     <img id="profilePhoto" th:src="@{'/api/photos/' + ${user.photo_id} + '?height=150'}"/>
                                 </div>
-                                <div th:if="${user.photo_id == 0}">
+                                <div th:unless="${user.photo_id > 0}">
                                     <img id="profilePhoto" src=""/>
                                 </div>
                                 <p><b th:text="${user.fullname}"></b> - <a th:href="@{/logout}">kirjaudu ulos</a></p>

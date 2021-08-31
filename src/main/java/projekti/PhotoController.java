@@ -69,8 +69,8 @@ public class PhotoController {
     }
    
     @PostMapping("/api/photos/{id}/likes")
-    public PhotoLike addLike(@PathVariable Long id) {
-        return photoService.savePhotoLike(id, accountService.getCurrentProfile());
+    public Photo addLike(@PathVariable Long id) {
+        return photoService.savePhotoLike(id, accountService.getCurrentProfile()).getPhoto();
     }
     
     private byte[] imageResize (byte[] image, int height) throws IOException {
