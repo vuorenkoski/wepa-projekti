@@ -26,6 +26,7 @@ public class PhotoService {
     @Autowired
     AccountService accountService;
     
+    @Transactional
     public Photo savePhoto(Photo photo) {
         if (photoRepository.countByProfile(photo.getProfile()) < 10) {
             return photoRepository.save(photo);
@@ -61,6 +62,7 @@ public class PhotoService {
         return null;
     }
     
+    @Transactional
     public void deletePhoto(Long id) {
         Profile currentProfile = accountService.getCurrentProfile();
         Photo photo = photoRepository.getOne(id);
