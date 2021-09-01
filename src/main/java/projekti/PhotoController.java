@@ -31,7 +31,7 @@ public class PhotoController {
         if (!description.isEmpty() && image.getSize()>0 && image.getContentType().equals("image/jpeg")) {
             Photo photo = new Photo();
             photo.setDescription(description);
-            photo.setImage(image.getBytes());
+            photo.setImage(imageResize(image.getBytes(), 300));
             photo.setProfile(accountService.getCurrentProfile());
             return photoService.savePhoto(photo);
         }
@@ -76,16 +76,19 @@ public class PhotoController {
     private byte[] imageResize (byte[] image, int height) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(image);
         BufferedImage bImage = ImageIO.read(bis);
-
-        int width = ((height * bImage.getWidth()) / bImage.getHeight());
-        Image resultingImage = bImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        BufferedImage outputImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
         
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(outputImage, "jpg", bos );
-      
-        return bos.toByteArray();
+        if (bImage.getHeight()>height) {
+            int width = ((height * bImage.getWidth()) / bImage.getHeight());
+            Image resultingImage = bImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+            BufferedImage outputImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(outputImage, "jpg", bos);
+
+            return bos.toByteArray();           
+        }
+        return image;
     } 
     
 }

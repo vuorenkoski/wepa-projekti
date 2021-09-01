@@ -126,7 +126,7 @@ httpGetPhotos.onreadystatechange = function() {
         var photoColNode = divElement("col-sm-12")
         var photoRowNode = divElementWithChild("row", photoColNode)
         var photoNode = document.createElement("img")
-        photoNode.setAttribute("src", contextRoot + "api/photos/" + data[i].id + "?height=300")
+        photoNode.setAttribute("src", contextRoot + "api/photos/" + data[i].id)
         var photoLinkNode = document.createElement("a")
         photoLinkNode.href = contextRoot + "api/photos/" + data[i].id
         photoLinkNode.appendChild(photoNode)
