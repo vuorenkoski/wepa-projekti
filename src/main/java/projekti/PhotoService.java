@@ -3,6 +3,7 @@ package projekti;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +61,16 @@ public class PhotoService {
         return null;
     }
     
-    public Photo deletePhoto(Long id) {
+    public void deletePhoto(Long id) {
+        Profile currentProfile = accountService.getCurrentProfile();
         Photo photo = photoRepository.getOne(id);
-        if (photo.getProfile().equals(accountService.getCurrentProfile())) {
-            if (photo.getProfile().getPhoto_id() != photo.getId()) {
-                photoRepository.delete(photo);
-            }
+        if (!photo.getProfile().equals(currentProfile)) {
+            return;
         }
-        return null;
+        if (Objects.equals(currentProfile.getPhoto_id(), photo.getId())) {
+            return;
+        }
+        photoRepository.delete(photo);
     }    
     
     @Transactional

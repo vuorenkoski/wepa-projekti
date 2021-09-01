@@ -52,9 +52,9 @@ public class PhotoController {
         return photo.getImage();
     }
 
-    @DeleteMapping(path = "/api/photos/{id}", produces = "image/jpg")
-    public Photo deletePhoto(@PathVariable Long id) {
-        return photoService.deletePhoto(id);
+    @DeleteMapping(path = "/api/photos/{id}")
+    public void deletePhoto(@PathVariable Long id) {
+        photoService.deletePhoto(id);
     }
     
     @PostMapping("/api/photos/{id}/comments")
