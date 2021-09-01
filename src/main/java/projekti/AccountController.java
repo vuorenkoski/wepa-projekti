@@ -87,7 +87,6 @@ public class AccountController {
     
     @GetMapping("/")
     public String index() {
-        System.out.println("tässä ollaan");
         Account account = accountService.getCurrentAccount();
         if (account != null) {
             if (account.getProfile()!=null) {

@@ -9,8 +9,9 @@ Toteutuskielet: Java ja Javascript
 
 ## tasks
 
+- kuvan poistaminen ei onnistu herokussa?
+- n+1 haasteet
+- testit
 - virheilmoitukset -väärät syötteet
 - virheilmoitukset -väärät http pyynnöt
 - turvallisuustestaus
-- n+1 haasteet
-- testit
