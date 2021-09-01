@@ -8,4 +8,8 @@ public interface MessageRepository extends JpaRepository<Message, Long>  {
 
     @EntityGraph(attributePaths = {"messageComments"})
     List<Message> findByProfileOrderByDateDesc(Profile profile);
+
+    @EntityGraph(attributePaths = {"messageComments"})
+    List<Message> findByProfileInOrderByDateDesc(List<Profile> profiles);
+
 }

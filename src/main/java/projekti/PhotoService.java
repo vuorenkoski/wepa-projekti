@@ -40,12 +40,10 @@ public class PhotoService {
     
     @Transactional
     public List<Photo> getPhotos(Profile profile) {
-        List<Photo> photos = new ArrayList<>();
-        followerRepository.findByProfile(profile).stream()
-                .filter(x -> !x.isHidden()).map(x -> x.getFollow()).
-                map(x -> x.getPhotos()).forEach(photos::addAll);
-        photos.addAll(photoRepository.findByProfileOrderByDateDesc(profile));
-        return photos.stream().sorted(Comparator.comparing(Photo::getDate).reversed()).limit(25).collect(Collectors.toList());
+        List<Profile> profiles = followerRepository.findByProfileAndHiddenFalse(profile).stream()
+                .map(x -> x.getFollow()).collect(Collectors.toList());
+        profiles.add(profile);
+        return photoRepository.findByProfileInOrderByDateDesc(profiles).stream().limit(25).collect(Collectors.toList());
     }
     
     @Transactional

@@ -32,12 +32,10 @@ public class MessageService {
     }
     
     public List<Message> getMessages(Profile profile) {
-        List<Message> messages = new ArrayList<>();
-        followerRepository.findByProfile(profile).stream()
-                .filter(x -> !x.isHidden()).map(x -> x.getFollow()).
-                map(x -> x.getMessages()).forEach(messages::addAll);
-        messages.addAll(messageRepository.findByProfileOrderByDateDesc(profile));
-        return messages.stream().sorted(Comparator.comparing(Message::getDate).reversed()).limit(25).collect(Collectors.toList());
+        List<Profile> profiles = followerRepository.findByProfileAndHiddenFalse(profile).stream()
+                .map(x -> x.getFollow()).collect(Collectors.toList());
+        profiles.add(profile);
+        return messageRepository.findByProfileInOrderByDateDesc(profiles).stream().limit(25).collect(Collectors.toList());
     }
     
     public Message getMessage(Long id) {
