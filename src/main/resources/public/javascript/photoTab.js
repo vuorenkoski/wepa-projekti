@@ -16,8 +16,11 @@ httpSendPhoto.onreadystatechange = function() {
     if (this.readyState!=4) {
         return
     }
-    if  (this.status!=200) {
-        document.getElementById("loadMessage").innerHTML = "Virhe: " + this.status        
+    if  (this.status!=201) {
+        var data = JSON.parse(this.responseText)
+        alert(data.message)
+        document.getElementById("loadMessage").innerHTML = ""
+        return
     }
     document.getElementById("loadMessage").innerHTML = ""
     var data = JSON.parse(this.responseText)

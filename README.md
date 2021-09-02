@@ -1,7 +1,7 @@
 # wepa-projekti
 Web-palvelinohjelmointi Java, 2021 -projektityö (Lauri Vuorenkoski)
 
-Toteutuskielet: Java ja Javascript
+Toteutuskielet: Java (Spring framework, Thymeleaf) ja Javascript
 
 ## Heroku
 
