@@ -118,21 +118,30 @@ httpGetFollowers.onreadystatechange = function() {
 
 function searchElement() {
     var input = document.createElement("input")
-    input.setAttribute("type", "text");
-    input.setAttribute("placeholder", "käyttäjän nimi");
+    input.setAttribute("type", "text")
+    input.setAttribute("placeholder", "käyttäjän nimi")
+    input.setAttribute("autocomplete", "off")
     input.id = "profileName"
     var row = divElementWithChild("row", input)
-    var addButton = document.createElement("input");
+    var addButton = document.createElement("input")
     addButton.setAttribute("type", "button")
     addButton.setAttribute("value", "Hae seurattavia")
     addButton.setAttribute("onclick", "getProfiles()")
     row.appendChild(addButton)
+
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        addButton.click();
+      }
+    });
+
     return row
 }
 
 function getProfiles() {
     httpGetProfiles.open("GET",contextRoot + "api/profiles?name=" + document.getElementById("profileName").value)
     httpGetProfiles.send()
+    document.getElementById("profileName").value = ""
 }
 
 function follow(id) {
