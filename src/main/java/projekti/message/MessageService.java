@@ -28,23 +28,23 @@ public class MessageService {
     @Autowired
     AccountService accountService;
     
-    public ResponseEntity saveMessage(Message message) {
+    public ResponseEntity saveMessage(Message message, Profile profile) {
         if ((message.getMessage().length() == 0) || (message.getMessage().length() > 1023)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ApiError(HttpStatus.BAD_REQUEST, "Viestin tulee olla 1-1023 merkkiä pitkä", "invalid format"));
         }
 
-        message.setProfile(accountService.getCurrentProfile());
+        message.setProfile(profile);
         message.setNumberOfLikes(0);
         return ResponseEntity.status(HttpStatus.CREATED).body(messageRepository.save(message));
     }
 
-    public ResponseEntity saveMessageComment(MessageComment messageComment, Long id) {
+    public ResponseEntity saveMessageComment(MessageComment messageComment, Long id, Profile profile) {
         if (messageComment.getComment().length()==0 || messageComment.getComment().length()>255) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new ApiError(HttpStatus.BAD_REQUEST, "Viestin tulee olla 1-255 merkkiä pitkä", "invalid format"));
         }
-        messageComment.setProfile(accountService.getCurrentProfile());
+        messageComment.setProfile(profile);
         messageComment.setMessage(this.getMessage(id));
         return ResponseEntity.status(HttpStatus.CREATED).body(messageCommentRepository.save(messageComment));
     }

@@ -1,7 +1,7 @@
 # wepa-projekti
 Web-palvelinohjelmointi Java, 2021 -projektityö (Lauri Vuorenkoski)
 
-Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Data liikkee selaimen ja palvelimen välillä restin läpi lukuunottamatta kirjautumista, profiilin tietoja. Pääosin single-page application.
+Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Data liikkuu selaimen ja palvelimen välillä restin läpi, lukuunottamatta kirjautumista ja profiilin tietoja. Pääosin single-page application.
 
 [Tehtäväksianto](https://web-palvelinohjelmointi-21.mooc.fi/projekti)
 
@@ -11,4 +11,6 @@ Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Dat
 
 ## tasks
 
-- testit
+- yksikkötestit
+- järjestelmätestit
+- DevelopmentSecurityConfiguration --> production

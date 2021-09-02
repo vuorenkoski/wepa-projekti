@@ -21,7 +21,7 @@ public class MessageController {
     
     @PostMapping("/api/messages")
     public ResponseEntity addMessage(@RequestBody Message message) {
-        return messageService.saveMessage(message);
+        return messageService.saveMessage(message, accountService.getCurrentProfile());
     }
     
     @GetMapping("/api/messages")
@@ -31,7 +31,7 @@ public class MessageController {
     
     @PostMapping("/api/messages/{id}/comments")
     public ResponseEntity addComment(@RequestBody MessageComment messageComment, @PathVariable Long id) {
-        return  messageService.saveMessageComment(messageComment, id);
+        return  messageService.saveMessageComment(messageComment, id, accountService.getCurrentProfile());
     }
 
     @PostMapping("/api/messages/{id}/likes")
