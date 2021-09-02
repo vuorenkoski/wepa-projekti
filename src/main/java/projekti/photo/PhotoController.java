@@ -43,23 +43,17 @@ public class PhotoController {
     }
 
     @DeleteMapping(path = "/api/photos/{id}")
-    public void deletePhoto(@PathVariable Long id) {
-        photoService.deletePhoto(id);
+    public ResponseEntity deletePhoto(@PathVariable Long id) {
+        return photoService.deletePhoto(id);
     }
     
     @PostMapping("/api/photos/{id}/comments")
-    public PhotoComment addComment(@RequestBody PhotoComment photoComment, @PathVariable Long id) {
-        if (photoComment.getComment().length()>0 && photoComment.getComment().length()<255) {
-            photoComment.setProfile(accountService.getCurrentProfile());
-            photoComment.setPhoto(photoService.getPhoto(id));
-            photoComment = photoService.savePhotoComment(photoComment);
-            return photoComment;
-        }
-        return null;
+    public ResponseEntity addComment(@RequestBody PhotoComment photoComment, @PathVariable Long id) {
+        return photoService.savePhotoComment(photoComment, id);
     }
    
     @PostMapping("/api/photos/{id}/likes")
-    public Photo addLike(@PathVariable Long id) {
-        return photoService.savePhotoLike(id, accountService.getCurrentProfile()).getPhoto();
+    public ResponseEntity addLike(@PathVariable Long id) {
+        return photoService.savePhotoLike(id, accountService.getCurrentProfile());
     }
 }

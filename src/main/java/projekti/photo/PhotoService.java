@@ -6,20 +6,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import projekti.account.AccountService;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.MultipartFile;
 import projekti.ApiError;
 import projekti.follower.Follower;
@@ -46,17 +41,21 @@ public class PhotoService {
     @Transactional
     public ResponseEntity savePhoto(MultipartFile image, String description) throws IOException {
         if (description.isEmpty()){
-            return new ResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Kuvaus puuttuu", "invalid format"), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiError(HttpStatus.BAD_REQUEST, "Kuvaus puuttuu", "invalid format"));
         }
         if (image.getSize() == 0) {
-            return new ResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Kuvaa ei löydy", "invalid format"), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiError(HttpStatus.BAD_REQUEST, "Kuvaa ei löydy", "invalid format"));
         }
         if (!image.getContentType().equals("image/jpeg")) {
-            return new ResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Kuvan tulee olla jpg muodossa", "invalid format"), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiError(HttpStatus.BAD_REQUEST, "Kuvan tulee olla jpg muodossa", "invalid format"));
         }
         Profile profile = accountService.getCurrentProfile();
         if (photoRepository.countByProfile(profile) > 9) {
-            return new ResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Sinulla voi olla enintään 10 kuvaa", "db error"), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).
+                    body(new ApiError(HttpStatus.FORBIDDEN, "Sinulla voi olla enintään 10 kuvaa. Poista ensin yksi kuva.", "forbidden"));
         }
 
         Photo photo = new Photo();
@@ -67,8 +66,14 @@ public class PhotoService {
         return ResponseEntity.status(HttpStatus.CREATED).body(photo);
     }
 
-    public PhotoComment savePhotoComment(PhotoComment photoComment) {
-        return photoCommentRepository.save(photoComment);
+    public ResponseEntity savePhotoComment(PhotoComment photoComment, Long id) {
+        if (photoComment.getComment().length()==0 || photoComment.getComment().length()>255) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiError(HttpStatus.BAD_REQUEST, "Viestin tulee olla 1-255 merkkiä pitkä", "invalid format"));
+        }
+        photoComment.setProfile(accountService.getCurrentProfile());
+        photoComment.setPhoto(this.getPhoto(id));
+        return ResponseEntity.status(HttpStatus.CREATED).body(photoCommentRepository.save(photoComment));
     }
     
     @Transactional
@@ -94,31 +99,35 @@ public class PhotoService {
     }
     
     @Transactional
-    public void deletePhoto(Long id) {
+    public ResponseEntity deletePhoto(Long id) {
         Profile currentProfile = accountService.getCurrentProfile();
         Photo photo = photoRepository.getOne(id);
         if (!photo.getProfile().equals(currentProfile)) {
-            return;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
+                    body(new ApiError(HttpStatus.UNAUTHORIZED, "Ei oikeutta", "forbidden"));
         }
         if (Objects.equals(currentProfile.getPhoto_id(), photo.getId())) {
-            return;
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).
+                    body(new ApiError(HttpStatus.FORBIDDEN, "Kuva on profiilikuvana. Vaihda ensin profiilikuva.", "forbidden"));
         }
         photoRepository.delete(photo);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }    
     
     @Transactional
-    public PhotoLike savePhotoLike(Long photoid, Profile profile) {
+    public ResponseEntity savePhotoLike(Long photoid, Profile profile) {
         Photo photo = this.getPhoto(photoid);
-        if (photoLikeRepository.findByProfileAndPhoto(profile, photo).isEmpty()) {
-            PhotoLike photoLike = new PhotoLike();
-            photoLike.setPhoto(photo);
-            photoLike.setProfile(profile);
-            photoLike = photoLikeRepository.save(photoLike);
-            photo.setNumberOfLikes(photo.getNumberOfLikes() + 1);
-            photoRepository.save(photo);
-            return photoLike;
+        if (!photoLikeRepository.findByProfileAndPhoto(profile, photo).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).
+                    body(new ApiError(HttpStatus.FORBIDDEN, "Olet jo tykännyt kuvasta", "forbidden"));
         }
-        return null;
+        PhotoLike photoLike = new PhotoLike();
+        photoLike.setPhoto(photo);
+        photoLike.setProfile(profile);
+        photoLike = photoLikeRepository.save(photoLike);
+        photo.setNumberOfLikes(photo.getNumberOfLikes() + 1);
+        photoRepository.save(photo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(photoLike.getPhoto());
     }
     
     public byte[] imageResize (byte[] image, int height) throws IOException {

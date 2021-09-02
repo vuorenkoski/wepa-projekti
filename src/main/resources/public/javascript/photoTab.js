@@ -5,7 +5,12 @@ var httpChangeProfile = new XMLHttpRequest()
 var httpSendPhoto = new XMLHttpRequest()
 
 httpDeletePhoto.onreadystatechange = function() {
-    if (this.readyState!=4 || this.status!=200) {
+    if (this.readyState!=4) {
+        return
+    }
+    if  (this.status!=200) {
+        var data = JSON.parse(this.responseText)
+        alert(data.message)
         return
     }
     httpGetPhotos.open("GET",contextRoot + "api/photos")
@@ -28,19 +33,27 @@ httpSendPhoto.onreadystatechange = function() {
 }
 
 httpSendPhotoComment.onreadystatechange = function() {
-    if (this.readyState!=4 || this.status!=200) {
+    if (this.readyState!=4) {
         return
     }
-
+    if  (this.status!=201) {
+        var data = JSON.parse(this.responseText)
+        alert(data.message)
+        return
+    }
     var data = JSON.parse(this.responseText)
     addComment(document.getElementById("commentsBlock" + data.photo.id), data)
 }
 
 httpSendPhotoLike.onreadystatechange = function() {
-    if (this.readyState!=4 || this.status!=200) {
+    if (this.readyState!=4) {
         return
     }
-
+    if  (this.status!=201) {
+        var data = JSON.parse(this.responseText)
+        alert(data.message)
+        return
+    }
     var photo = JSON.parse(this.responseText)
     document.getElementById("likesNode" + photo.id).innerHTML = "" + photo.numberOfLikes + " tykkäystä"
 }
