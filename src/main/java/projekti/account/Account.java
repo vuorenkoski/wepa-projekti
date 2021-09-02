@@ -15,11 +15,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 public class Account extends AbstractPersistable<Long> {
 
-    @NotEmpty
-    @Size(min = 3, max = 11)
+    @NotEmpty(message = "ei voi olla tyhjä")
+    @Size(min = 3, max = 11, message = "3-11 merkkiä")
     private String username;
 
-    @NotEmpty
+    @NotEmpty(message = "ei voi olla tyhjä")
     private String password;
 
     @OneToOne

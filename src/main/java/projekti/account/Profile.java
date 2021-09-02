@@ -20,13 +20,13 @@ import projekti.follower.Follower;
 @AllArgsConstructor
 @Data
 public class Profile extends AbstractPersistable<Long> {
-    @NotEmpty
-    @Size(min = 8, max = 30)
+    @NotEmpty(message = "ei voi olla tyhjä")
+    @Size(min = 8, max = 30, message = "8-30 merkkiä")
     private String fullname;
 
-    @NotEmpty
-    @Size(min = 5, max = 20)
-    @Pattern(regexp = "[a-z]*")
+    @NotEmpty(message = "ei voi olla tyhjä")
+    @Size(min = 5, max = 20, message = "5-20 merkkiä")
+    @Pattern(regexp = "[a-z]*", message = "voi sisältää vain merkkejä a-z")
     private String profilename;
     
     private Long photo_id;
