@@ -10,7 +10,7 @@ var followerRoot = divElement("col-sm-6")
 function followersTab() {
     highlightNavlink("followersTab")
 
-    var root = document.getElementById("contents1")
+    var root = document.getElementById("contents")
     var rootRow = divElement("row")
     var followColumn = divElement("col-sm-6")
 
@@ -57,6 +57,12 @@ httpGetFollow.onreadystatechange = function() {
 
 httpGetProfiles.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
+        return
+    }
+
+    if (this.status!=200) {
+        var data = JSON.parse(this.responseText)
+        alert(data.message)
         return
     }
 

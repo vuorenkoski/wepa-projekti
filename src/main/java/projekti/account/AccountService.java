@@ -2,10 +2,13 @@ package projekti.account;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import projekti.ApiError;
 
 @Service
 public class AccountService {
@@ -45,9 +48,13 @@ public class AccountService {
         return profileRepository.getOne(id);
     }
     
-    public List<Profile> searchProfiles (String searchTerm) {
+    public ResponseEntity searchProfiles (String searchTerm) {
         List<Profile> profiles = profileRepository.findByFullnameContainingIgnoreCase(searchTerm);
-        return profiles;
+        if (profiles.size() > 20) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).
+                    body(new ApiError(HttpStatus.FORBIDDEN, "Liian monta hakutulosta. Rajaa hakua.", "forbidden"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(profiles);
     }
 
     public Account saveAccount(Account account) {

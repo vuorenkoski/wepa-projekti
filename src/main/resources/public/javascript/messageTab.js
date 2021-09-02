@@ -49,7 +49,7 @@ httpGetMessages.onreadystatechange = function() {
 
     clearContents()
 
-    var root = document.getElementById("contents1")
+    var root = document.getElementById("contents")
 
     textAreaNode = document.createElement("textarea")
     textAreaNode.setAttribute("id", "newMessage")

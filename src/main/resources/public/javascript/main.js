@@ -29,11 +29,7 @@ function emptyRow() {
 }
 
 function clearContents() {
-    var element = document.getElementById("contents1")
-    while (element.firstChild) {
-      element.removeChild(element.lastChild);
-    }
-    element = document.getElementById("contents2")
+    var element = document.getElementById("contents")
     while (element.firstChild) {
       element.removeChild(element.lastChild);
     }

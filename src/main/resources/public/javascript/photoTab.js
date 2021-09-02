@@ -75,7 +75,7 @@ httpGetPhotos.onreadystatechange = function() {
 
     clearContents()
 
-    var root = document.getElementById("contents1")
+    var root = document.getElementById("contents")
 
     var addFormNode = document.createElement("form")
     addFormNode.setAttribute("method", "POST")

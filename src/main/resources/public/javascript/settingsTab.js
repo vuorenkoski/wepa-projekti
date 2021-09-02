@@ -1,6 +1,6 @@
 function settingsTab() {
     highlightNavlink("settingsTab")
-    var root = document.getElementById("contents1")
+    var root = document.getElementById("contents")
 
     var link = document.createElement("a")
     link.href = "/profile"
