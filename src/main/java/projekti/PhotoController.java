@@ -44,7 +44,7 @@ public class PhotoController {
     }
 
     @GetMapping(path = "/api/photos/{id}", produces = "image/jpg")
-    public byte[] getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer height) throws IOException {
+    public byte[] getPhoto(@PathVariable Long id, @RequestParam(required = false) Integer height) throws IOException {
         Photo photo = photoService.getPhoto(id);
         if (height != null) {
             return imageResize(photo.getImage(), height);

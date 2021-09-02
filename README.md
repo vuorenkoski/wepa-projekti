@@ -9,7 +9,7 @@ Toteutuskielet: Java ja Javascript
 
 ## tasks
 
-- n+1 haasteet
+- n+1 haasteet (seuraaja välilehti, profiileja haetaan useasti)
 - testit
 - virheilmoitukset -väärät syötteet
 - virheilmoitukset -väärät http pyynnöt
