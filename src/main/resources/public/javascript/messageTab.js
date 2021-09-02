@@ -111,6 +111,7 @@ function createMessageElement(data) {
     // Main container for message
     var mainColNode = divElement("col-sm-12")
     var mainRowNode = divElementWithChild("row", mainColNode)
+    mainRowNode.className = "messageElement"
 
     // Full name row
     var nameRowNode = divElement("row")
@@ -174,10 +175,6 @@ function createMessageElement(data) {
     var newCommentRowBlock = divElementWithChild("row", divElement("col-sm-1"))
     newCommentRowBlock.appendChild(divElementWithChild("col-sm-11", newCommentRow))
     mainColNode.appendChild(newCommentRowBlock)
-
-    // extra empty rows at the end
-    mainColNode.appendChild(emptyRow())
-    mainColNode.appendChild(emptyRow())
 
     return mainRowNode
 }

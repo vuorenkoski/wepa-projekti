@@ -169,6 +169,7 @@ function createPhotoElement(data) {
     // Main container for photo
     var mainColNode = divElement("col-sm-12")
     var mainRowNode = divElementWithChild("row", mainColNode)
+    mainRowNode.className = "messageElement"
 
     // Full name row
     var nameRowNode = divElement("row")

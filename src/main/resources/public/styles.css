@@ -5,7 +5,14 @@
 .addColor {
   color: green;
 }
+
 .mousePointer
 {
     cursor: pointer;
+}
+
+.messageElement {
+    background-color: ghostwhite;
+    padding: 5px;
+    margin-bottom: 10px;
 }
