@@ -1,4 +1,4 @@
-package projekti;
+package projekti.photo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import projekti.account.Profile;
 
 @Entity
 @NoArgsConstructor

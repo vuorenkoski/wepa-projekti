@@ -1,5 +1,6 @@
-package projekti;
+package projekti.follower;
 
+import projekti.account.Profile;
 import java.util.List;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

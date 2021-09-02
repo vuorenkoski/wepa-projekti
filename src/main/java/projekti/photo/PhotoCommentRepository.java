@@ -1,4 +1,4 @@
-package projekti;
+package projekti.photo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,5 +1,6 @@
-package projekti;
+package projekti.photo;
 
+import projekti.account.AccountService;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

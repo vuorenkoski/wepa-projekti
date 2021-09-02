@@ -1,5 +1,7 @@
-package projekti;
+package projekti.account;
 
+import projekti.photo.Photo;
+import projekti.message.Message;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import projekti.follower.Follower;
 
 @Entity
 @NoArgsConstructor

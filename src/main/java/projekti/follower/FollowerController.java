@@ -1,5 +1,7 @@
-package projekti;
+package projekti.follower;
 
+import projekti.account.Profile;
+import projekti.account.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

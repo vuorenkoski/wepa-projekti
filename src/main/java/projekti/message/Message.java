@@ -1,4 +1,4 @@
-package projekti;
+package projekti.message;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import projekti.account.Profile;
 
 @Entity
 @NoArgsConstructor

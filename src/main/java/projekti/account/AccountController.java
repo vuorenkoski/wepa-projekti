@@ -1,4 +1,4 @@
-package projekti;
+package projekti.account;
 
 import java.util.List;
 import java.util.stream.Collectors;

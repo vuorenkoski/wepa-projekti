@@ -1,5 +1,6 @@
-package projekti;
+package projekti.photo;
 
+import projekti.account.AccountService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,6 +9,9 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import projekti.follower.Follower;
+import projekti.follower.FollowerRepository;
+import projekti.account.Profile;
 
 @Service
 public class PhotoService {

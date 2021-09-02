@@ -1,5 +1,6 @@
-package projekti;
+package projekti.follower;
 
+import projekti.account.Profile;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

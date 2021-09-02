@@ -1,4 +1,4 @@
-package projekti;
+package projekti.photo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
@@ -8,15 +8,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import projekti.account.Profile;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageLike extends AbstractPersistable<Long> {
+public class PhotoLike extends AbstractPersistable<Long> {
     @ManyToOne
     @JsonIgnore
-    private Message message;
+    private Photo photo;
     
     @ManyToOne
     private Profile profile;
