@@ -5,7 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import projekti.ApiError;
+import projekti.account.AccountService;
 import projekti.follower.FollowerRepository;
 import projekti.account.Profile;
 
@@ -23,14 +27,28 @@ public class MessageService {
     @Autowired
     FollowerRepository followerRepository;
     
-    public Message saveMessage(Message message) {
-        message = messageRepository.save(message);
-        return messageRepository.save(message);
+    @Autowired
+    AccountService accountService;
+    
+    public ResponseEntity saveMessage(Message message) {
+        if ((message.getMessage().length() == 0) || (message.getMessage().length() > 1023)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiError(HttpStatus.BAD_REQUEST, "Viestin tulee olla 1-1023 merkkiä pitkä", "invalid format"));
+        }
+
+        message.setProfile(accountService.getCurrentProfile());
+        message.setNumberOfLikes(0);
+        return ResponseEntity.status(HttpStatus.CREATED).body(messageRepository.save(message));
     }
 
-    public MessageComment saveMessageComment(MessageComment messageComment) {
-        messageComment = messageCommentRepository.save(messageComment);
-        return messageCommentRepository.save(messageComment);
+    public ResponseEntity saveMessageComment(MessageComment messageComment, Long id) {
+        if (messageComment.getComment().length()==0 || messageComment.getComment().length()>255) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiError(HttpStatus.BAD_REQUEST, "Viestin tulee olla 1-255 merkkiä pitkä", "invalid format"));
+        }
+        messageComment.setProfile(accountService.getCurrentProfile());
+        messageComment.setMessage(this.getMessage(id));
+        return ResponseEntity.status(HttpStatus.CREATED).body(messageCommentRepository.save(messageComment));
     }
     
     public List<Message> getMessages(Profile profile) {
@@ -44,17 +62,18 @@ public class MessageService {
         return messageRepository.getOne(id);
     }
     
-    public MessageLike saveMessageLike(Long messageid, Profile profile) {
+    public ResponseEntity saveMessageLike(Long messageid, Profile profile) {
         Message message = this.getMessage(messageid);
-        if (messageLikeRepository.findByProfileAndMessage(profile, message).isEmpty()) {
-            MessageLike messageLike = new MessageLike();
-            messageLike.setMessage(message);
-            messageLike.setProfile(profile);
-            messageLike = messageLikeRepository.save(messageLike);
-            message.setNumberOfLikes(message.getNumberOfLikes() + 1);
-            messageRepository.save(message);
-            return messageLike;
+        if (!messageLikeRepository.findByProfileAndMessage(profile, message).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).
+                    body(new ApiError(HttpStatus.FORBIDDEN, "Olet jo tykännyt viestistä", "forbidden"));
         }
-        return null;
+        MessageLike messageLike = new MessageLike();
+        messageLike.setMessage(message);
+        messageLike.setProfile(profile);
+        messageLike = messageLikeRepository.save(messageLike);
+        message.setNumberOfLikes(message.getNumberOfLikes() + 1);
+        messageRepository.save(message);
+        return ResponseEntity.status(HttpStatus.CREATED).body(messageLike.getMessage());
     }
 }
