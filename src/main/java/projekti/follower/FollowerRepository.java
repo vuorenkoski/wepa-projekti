@@ -9,7 +9,11 @@ public interface FollowerRepository extends JpaRepository<Follower, Long> {
 
     List<Follower> findByProfileAndHiddenFalse(Profile profile);
 
+    @EntityGraph(attributePaths = {"follow"})
     List<Follower> findByProfile(Profile profile);
+    
+    @EntityGraph(attributePaths = {"profile"})
     List<Follower> findByFollow(Profile follow);
+
     List<Follower> findByProfileAndFollow(Profile profile, Profile follow);
 }

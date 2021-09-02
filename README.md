@@ -9,8 +9,7 @@ Toteutuskielet: Java (Spring framework, Thymeleaf) ja Javascript
 
 ## tasks
 
-- n+1 haasteet (seuraaja välilehti, profiileja haetaan useasti)
+- virheilmoitukset -väärät syötteet (messages)
+- virheilmoitukset -väärät syötteet (login ym.)
 - testit
-- virheilmoitukset -väärät syötteet
-- virheilmoitukset -väärät http pyynnöt
 - turvallisuustestaus
