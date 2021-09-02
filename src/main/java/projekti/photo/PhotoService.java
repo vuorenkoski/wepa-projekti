@@ -66,6 +66,7 @@ public class PhotoService {
         return ResponseEntity.status(HttpStatus.CREATED).body(photo);
     }
 
+    @Transactional
     public ResponseEntity savePhotoComment(PhotoComment photoComment, Long id) {
         if (photoComment.getComment().length()==0 || photoComment.getComment().length()>255) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).

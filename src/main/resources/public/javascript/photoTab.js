@@ -270,9 +270,5 @@ function createPhotoElement(data) {
     newCommentRowBlock.appendChild(divElementWithChild("col-sm-11", newCommentRow))
     mainColNode.appendChild(newCommentRowBlock)
 
-    // extra empty rows at the end
-    mainColNode.appendChild(emptyRow())
-    mainColNode.appendChild(emptyRow())
-
     return mainRowNode
 }
