@@ -13,26 +13,24 @@
 
     <body>
         <header th:fragment="header">
-            <div class="jumbotron text-left" style="margin-bottom:0">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-3">
-                            <div th:if="${user != null}">
-                                <div th:if="${user.photo_id > 0}">
-                                    <img id="profilePhoto" th:src="@{'/api/photos/' + ${user.photo_id} + '?height=150'}"/>
-                                </div>
-                                <div th:unless="${user.photo_id > 0}">
-                                    <img id="profilePhoto" src=""/>
-                                </div>
-                                <p><b th:text="${user.fullname}"></b> - <a th:href="@{/logout}">kirjaudu ulos</a></p>
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col-4">
+                        <div th:if="${user != null}">
+                            <div th:if="${user.photo_id > 0}">
+                                <img id="profilePhoto" th:src="@{'/api/photos/' + ${user.photo_id} + '?height=150'}"/>
                             </div>
+                            <div th:unless="${user.photo_id > 0}">
+                                <img id="profilePhoto" src=""/>
+                            </div>
+                            <p><b th:text="${user.fullname}"></b> - <a th:href="@{/logout}">kirjaudu ulos</a></p>
                         </div>
-                        <div class="col-9">
-                            <h1>Kakkosnelonen</h1>
-                            <i>Navigare necesse est</i> 
-                        </div>
-                    </div>    
-                </div>
+                    </div>
+                    <div class="col-8">
+                        <h1>Kakkosnelonen</h1>
+                        <i>Navigare necesse est</i> 
+                    </div>
+                </div>    
             </div>
         </header>
 
