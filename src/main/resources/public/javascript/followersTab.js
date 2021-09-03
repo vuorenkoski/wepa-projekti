@@ -29,6 +29,16 @@ function followersTab() {
     httpGetFollow.send()
 }
 
+httpSendFollowers.onreadystatechange = function() {
+    if (this.readyState!=4 || this.status!=200) {
+        return
+    }
+    httpGetFollow.open("GET",contextRoot + "api/follow")
+    httpGetFollow.send()
+    httpGetFollowers.open("GET",contextRoot + "api/followers")
+    httpGetFollowers.send()
+}
+
 httpGetFollow.onreadystatechange = function() {
     if (this.readyState!=4 || this.status!=200) {
         return
@@ -154,16 +164,6 @@ function follow(id) {
     httpSendFollowers.open("POST",contextRoot + "api/follow/" + id)
     httpSendFollowers.send()
 } 
-
-httpSendFollowers.onreadystatechange = function() {
-    if (this.readyState!=4 || this.status!=200) {
-        return
-    }
-    httpGetFollow.open("GET",contextRoot + "api/follow")
-    httpGetFollow.send()
-    httpGetFollowers.open("GET",contextRoot + "api/followers")
-    httpGetFollowers.send()
-}
 
 function removeFollow(id) {
     httpSendFollowers.open("DELETE",contextRoot + "api/follow/" + id)
