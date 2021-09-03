@@ -23,7 +23,12 @@
                             <div th:unless="${user.photo_id > 0}">
                                 <img id="profilePhoto" src=""/>
                             </div>
-                            <p><b th:text="${user.fullname}"></b> - <a th:href="@{/logout}">kirjaudu ulos</a></p>
+                            <p><b th:text="${user.fullname}"></b> - 
+                            <a href="#" onclick="document.getElementById('logout-form').submit();"> Kirjaudu ulos</a> </p>
+
+                            <form id="logout-form" th:action="@{/logout}" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
                         </div>
                     </div>
                     <div class="col-8">

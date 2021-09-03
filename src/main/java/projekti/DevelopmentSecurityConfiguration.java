@@ -27,14 +27,15 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
 
+        http.formLogin().loginPage("/login").defaultSuccessUrl("/");
+        http.logout().logoutSuccessUrl("/");
         
         http.authorizeRequests()
-                .antMatchers("/signup","/","/styles.css").permitAll()
+                .antMatchers("/signup","/","/styles.css", "/login").permitAll()
                 .antMatchers("/h2-console","/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
-                .formLogin().loginPage("/login").permitAll().and()
-                .logout().permitAll()
-                .logoutSuccessUrl("/");
+                .formLogin().permitAll().and()
+                .logout().permitAll();
     }
 
     @Autowired
