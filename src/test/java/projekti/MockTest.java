@@ -31,16 +31,16 @@ public class MockTest {
     mockMvc.perform(post("/login")
               .param("username", "alice").param("password", "salasana"))
               .andExpect(redirectedUrl("/"));
-//    mockMvc.perform(get("/")).andExpect(redirectedUrl("/profile"));
+    mockMvc.perform(get("/")).andExpect(redirectedUrl("/profile"));
 
-//    mockMvc.perform(post("/profile")
-//              .param("fullname", "Alice Smith").param("profilename", "alicesmith"));
-//
-//    mockMvc.perform(post("/api/messages")
-//              .param("message", "Ensimmäinen viestini")).andExpect(status().is2xxSuccessful());
-//
-//    mockMvc.perform(post("/api/messages")
-//              .param("message", "toinen")).andExpect(status().is2xxSuccessful());
+    mockMvc.perform(post("/profile")
+              .param("fullname", "Alice Smith").param("profilename", "alicesmith"));
+
+    mockMvc.perform(post("/api/messages")
+              .param("message", "Ensimmäinen viestini")).andExpect(status().is2xxSuccessful());
+
+    mockMvc.perform(post("/api/messages")
+              .param("message", "toinen")).andExpect(status().is2xxSuccessful());
     
   } 
   

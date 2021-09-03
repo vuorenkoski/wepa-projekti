@@ -12,29 +12,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Profile("production")
-@Configuration
+@Profile("test")
 @EnableWebSecurity
-public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@Configuration
+public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
         
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       
+        
         // poistetaan csrf-tarkistus käytöstä h2-konsolin vuoksi
-//        http.csrf().disable();
-//        http.headers().frameOptions().sameOrigin();
-
-        http.csrf().ignoringAntMatchers("/api/**", "/profile/photo/");
+        http.csrf().disable();
+        http.headers().frameOptions().sameOrigin();
 
         http.formLogin().loginPage("/login").defaultSuccessUrl("/");
         http.logout().logoutSuccessUrl("/");
         
         http.authorizeRequests()
                 .antMatchers("/signup","/","/styles.css", "/login").permitAll()
-//                .antMatchers("/h2-console","/h2-console/**").permitAll()
+                .antMatchers("/h2-console","/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().permitAll().and()
                 .logout().permitAll();

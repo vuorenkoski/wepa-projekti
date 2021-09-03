@@ -27,6 +27,8 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
 
+//        http.csrf().ignoringAntMatchers("/api/**", "/profile/photo/");
+        
         http.formLogin().loginPage("/login").defaultSuccessUrl("/");
         http.logout().logoutSuccessUrl("/");
         
