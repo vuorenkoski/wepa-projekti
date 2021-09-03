@@ -67,17 +67,20 @@ public class UnitTest {
         message.setProfile(p1);
         message.setNumberOfLikes(0);
         message = messageRepository.save(message);
+        messageRepository.flush();
         
         MessageComment mc = new MessageComment();
         mc.setComment("hyva");
-        System.out.println("xxxxxxxxxxxxxxx" + messageService.saveMessageComment(mc, message.getId(), p2).toString());
+        messageService.saveMessageComment(mc, message.getId(), p2);
         
         mc = new MessageComment();
         mc.setComment("no jaa...");
         messageService.saveMessageComment(mc, message.getId(), p1);
+        messageCommentRepository.flush();
         
         messageService.saveMessageLike(message.getId(), p1);
         messageService.saveMessageLike(message.getId(), p2);
+        messageLikeRepository.flush();
     }
     
     @Test
@@ -89,7 +92,7 @@ public class UnitTest {
     @Test
     public void TestFirstMessage() {
         Profile p = profileRepository.findByProfilename("alices");
-        List<Profile> profiles = new ArrayList<Profile>();
+        List<Profile> profiles = new ArrayList<>();
         profiles.add(p);
         Message m = messageRepository.findByProfileInOrderByDateDesc(profiles).get(1);
         assertEquals("Tämä on ensimmäinen kirjoitukseni", m.getMessage());
@@ -98,7 +101,7 @@ public class UnitTest {
     @Test
     public void TestSecondMessage() {
         Profile p = profileRepository.findByProfilename("alices");
-        List<Profile> profiles = new ArrayList<Profile>();
+        List<Profile> profiles = new ArrayList<>();
         profiles.add(p);
         Message m = messageRepository.findByProfileInOrderByDateDesc(profiles).get(0);
         System.out.println(m.toString());
@@ -108,23 +111,33 @@ public class UnitTest {
     @Test
     public void TestNumberOfLikes() {
         Profile p = profileRepository.findByProfilename("alices");
-        List<Profile> profiles = new ArrayList<Profile>();
+        List<Profile> profiles = new ArrayList<>();
         profiles.add(p);
         int n = messageRepository.findByProfileInOrderByDateDesc(profiles).get(0).getNumberOfLikes();
         assertEquals(2, n);
     }
 
-//    @Test
-//    public void TestComments() {
-//        Profile p = profileRepository.findByProfilename("alices");
-//        List<Profile> profiles = new ArrayList<Profile>();
-//        profiles.add(p);
-//        Message m = messageRepository.findByProfileInOrderByDateDesc(profiles).get(0);
-//        System.out.println(m.toString());
-//        assertEquals(2, m.getMessageComments().size());
-//        assertEquals("hyvä", m.getMessageComments().get(0).getComment());
-//        assertEquals("Alice Smith", m.getMessageComments().get(1).getProfile().getFullname());
-//    }
+    @Test
+    public void TestCommentsCount() {
+        List <MessageComment> m = messageCommentRepository.findAll();
+        assertEquals(2, m.size());
+    }
+    
+    @Test
+    public void TestLikesCount() {
+        List <MessageLike> m = messageLikeRepository.findAll();
+        assertEquals(2, m.size());
+    }
+    
+    @Test
+    public void TestComments() {
+        Profile p = profileRepository.findByProfilename("alices");
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(p);
+        Message m = messageRepository.findByProfileInOrderByDateDesc(profiles).get(0);
+        List <MessageComment> mc = messageRepository.getOne(m.getId()).getMessageComments();
+        assertEquals(2, mc.size());
+    }
     
     private Profile createUser(String username, String password, String fullname, String profilename) {
         Account account = new Account();
@@ -137,6 +150,7 @@ public class UnitTest {
         profileRepository.save(profile);
         account.setProfile(profile);
         accountRepository.save(account);
+        accountRepository.flush();
         return profile;
     }
 }

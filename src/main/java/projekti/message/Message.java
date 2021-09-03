@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
@@ -28,7 +29,7 @@ public class Message extends AbstractPersistable<Long> {
     
     private LocalDateTime date = LocalDateTime.now(); 
     
-    @OneToMany(mappedBy = "message")
+    @OneToMany(mappedBy = "message", fetch = FetchType.EAGER)
     List<MessageComment> messageComments;
     
     private int numberOfLikes;
