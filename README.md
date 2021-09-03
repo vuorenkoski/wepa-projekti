@@ -11,5 +11,5 @@ Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Dat
 
 ## tasks
 
-- Message-messageComment linkki ei näy tesiteissä
+- Message-messageComment linkki ei näy testeissä
 - selenium testit herjaa document.prepend metodin puutteesta
