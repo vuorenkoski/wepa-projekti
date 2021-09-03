@@ -24,7 +24,7 @@
                                 <img id="profilePhoto" src=""/>
                             </div>
                             <p><b th:text="${user.fullname}"></b> - 
-                            <a href="#" onclick="document.getElementById('logout-form').submit();"> Kirjaudu ulos</a> </p>
+                            <a id="logout" href="#" onclick="document.getElementById('logout-form').submit();"> Kirjaudu ulos</a> </p>
 
                             <form id="logout-form" th:action="@{/logout}" method="post">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -18,7 +18,7 @@ import projekti.account.Profile;
 @Data
 public class MessageComment extends AbstractPersistable<Long> {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"profile", "message", "date", "messageComments", "numberOfLikes"})
     private Message message;
     

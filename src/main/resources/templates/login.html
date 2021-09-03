@@ -28,15 +28,15 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <center>
-                                <form name='f' th:action="@{/login}" method='POST'>
+                                <form name="f" th:action="@{/login}" method='POST'>
                                     <table>
                                         <tr>
                                             <td>Käyttäjätunnus</td>
-                                            <td><input type='text' name='username' value=''></td>
+                                            <td><input id="username" type="text" name="username" value=""></td>
                                         </tr>
                                         <tr>
                                             <td>Salasana</td>
-                                            <td><input type='password' name='password' /></td>
+                                            <td><input id="password" type="password" name="password"/></td>
                                         </tr>
                                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                         <tr>

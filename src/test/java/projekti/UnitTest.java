@@ -104,7 +104,6 @@ public class UnitTest {
         List<Profile> profiles = new ArrayList<>();
         profiles.add(p);
         Message m = messageRepository.findByProfileInOrderByDateDesc(profiles).get(0);
-        System.out.println(m.toString());
         assertEquals("Toinen", m.getMessage());
     }
     
@@ -122,22 +121,12 @@ public class UnitTest {
         List <MessageComment> m = messageCommentRepository.findAll();
         assertEquals(2, m.size());
     }
-    
+       
     @Test
-    public void TestLikesCount() {
-        List <MessageLike> m = messageLikeRepository.findAll();
-        assertEquals(2, m.size());
+    public void TestComments() {
+        List <MessageComment> mc = messageCommentRepository.findAll();
+        assertEquals(2, mc.size());
     }
-    
-//    @Test
-//    public void TestComments() {
-//        Profile p = profileRepository.findByProfilename("alices");
-//        List<Profile> profiles = new ArrayList<>();
-//        profiles.add(p);
-//        Message m = messageRepository.findByProfileInOrderByDateDesc(profiles).get(0);
-//        List <MessageComment> mc = messageRepository.getOne(m.getId()).getMessageComments();
-//        assertEquals(2, mc.size());
-//    }
     
     private Profile createUser(String username, String password, String fullname, String profilename) {
         Account account = new Account();

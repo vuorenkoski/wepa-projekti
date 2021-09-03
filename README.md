@@ -11,6 +11,4 @@ Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Dat
 
 ## tasks
 
-- yksikkötestit
-- järjestelmätestit
-- DevelopmentSecurityConfiguration --> production
+- takaisin alkuun (login ja signup)

@@ -86,7 +86,8 @@ httpGetProfiles.onreadystatechange = function() {
         user.innerHTML = data[i].fullname + "&nbsp;&nbsp;--"
         userRow = divElementWithChild("row", user)
         var remove = document.createElement("div")
-        remove.innerHTML = "lisaa" 
+        remove.id = "followUserClick"
+        remove.innerHTML = "lisää" 
         remove.classList.add("addColor")
         remove.classList.add("mousePointer")
         remove.setAttribute("onclick", "follow(" + data[i].id + ")")
@@ -140,6 +141,7 @@ function searchElement() {
     input.id = "profileName"
     var row = divElementWithChild("row", input)
     var addButton = document.createElement("input")
+    addButton.id = "searchProfiles"
     addButton.setAttribute("type", "button")
     addButton.setAttribute("value", "Hae seurattavia")
     addButton.setAttribute("onclick", "getProfiles()")

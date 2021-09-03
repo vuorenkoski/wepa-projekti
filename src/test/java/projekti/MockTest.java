@@ -150,6 +150,8 @@ public class MockTest {
         MvcResult res = mockMvc.perform(get("/api/messages")).andReturn();
 
         String content = res.getResponse().getContentAsString();
+        System.out.println("XXXXXXXXXX"+ content);
+
         Assert.assertTrue(content.contains("kirjoitukseni"));
     }
 
@@ -295,5 +297,4 @@ public class MockTest {
         accountRepository.flush();
         return profile;
     }
-  
 }

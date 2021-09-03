@@ -59,6 +59,7 @@ httpGetMessages.onreadystatechange = function() {
     var newMessageRowNode = divElementWithChild("row", newMessageColNode)
 
     var dbtn = document.createElement("input");
+    dbtn.id = "publishButton"
     dbtn.setAttribute("type", "button")
     dbtn.setAttribute("value", "Julkaise uusi viesti")
     dbtn.setAttribute("onclick", "sendMessage()")
@@ -127,6 +128,7 @@ function createMessageElement(data) {
     var likesNode = divElementWithChild("col-sm-2", likesText)
 
     var btn = document.createElement("input");
+    btn.id = "likeButton"
     btn.setAttribute("type", "button")
     btn.setAttribute("value", "Tykkää")
     btn.setAttribute("onclick", "likeMessage("+ data.id + ")")
@@ -167,6 +169,7 @@ function createMessageElement(data) {
     newCommentNode.setAttribute("cols", "30")
     newCommentRow.appendChild(newCommentNode)
     var cbtn = document.createElement("input");
+    cbtn.id = "commentButton"
     cbtn.setAttribute("type", "button")
     cbtn.setAttribute("value", "Lähetä kommentti")
     cbtn.setAttribute("onclick", "addMessageComment("+ data.id + ")")

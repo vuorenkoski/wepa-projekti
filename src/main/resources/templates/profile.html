@@ -31,12 +31,12 @@
                                     <table>
                                         <tr>
                                             <td>Käyttäjän nimi</td>
-                                            <td><input type="text" th:field="*{fullname}" /></td>
+                                            <td><input id="fullname" type="text" th:field="*{fullname}" /></td>
                                             <td th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Virheviesti</td>
                                         </tr>
                                         <tr>
                                             <td>Profiilin nimi</td>
-                                            <td><input type="text" th:field="*{profilename}" /></td>
+                                            <td><input id="profilename" type="text" th:field="*{profilename}" /></td>
                                             <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Virheviesti</td>
                                         </tr>
                                         <tr>

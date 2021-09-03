@@ -30,14 +30,13 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
         http.csrf().ignoringAntMatchers("/api/**", "/profile/photo/");
         
         http.formLogin().loginPage("/login").defaultSuccessUrl("/");
-        http.logout().logoutSuccessUrl("/");
         
         http.authorizeRequests()
                 .antMatchers("/signup","/","/styles.css", "/login").permitAll()
                 .antMatchers("/h2-console","/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().permitAll().and()
-                .logout().permitAll();
+                .logout().logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired
