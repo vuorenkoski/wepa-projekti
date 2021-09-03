@@ -23,10 +23,6 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        
-        // poistetaan csrf-tarkistus käytöstä h2-konsolin vuoksi
-//        http.csrf().disable();
-//        http.headers().frameOptions().sameOrigin();
-
         http.csrf().ignoringAntMatchers("/api/**", "/profile/photo/");
 
         http.formLogin().loginPage("/login").defaultSuccessUrl("/");
@@ -34,7 +30,6 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         
         http.authorizeRequests()
                 .antMatchers("/signup","/","/styles.css", "/login").permitAll()
-//                .antMatchers("/h2-console","/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().permitAll().and()
                 .logout().permitAll();

@@ -24,10 +24,10 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         
         // poistetaan csrf-tarkistus käytöstä h2-konsolin vuoksi
-        http.csrf().disable();
+        http.csrf().ignoringAntMatchers("/h2-console/**");
         http.headers().frameOptions().sameOrigin();
 
-//        http.csrf().ignoringAntMatchers("/api/**", "/profile/photo/");
+        http.csrf().ignoringAntMatchers("/api/**", "/profile/photo/");
         
         http.formLogin().loginPage("/login").defaultSuccessUrl("/");
         http.logout().logoutSuccessUrl("/");
