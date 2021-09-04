@@ -110,6 +110,10 @@ httpGetFollowers.onreadystatechange = function() {
     followTitle.innerHTML = "Seuraajat"
     followerRoot.appendChild(divElementWithChild("row", followTitle))
 
+    var followDescription = document.createElement("p")
+    followDescription.innerHTML = "Nämä  käyttäjät seuraavat sinua. Voit estää seuraamisen painamalla estä."
+    followerRoot.appendChild(divElementWithChild("row", followDescription))
+
     var data = JSON.parse(this.responseText)
     for (i=0; i<data.length; i++) {
         var remove = document.createElement("div")

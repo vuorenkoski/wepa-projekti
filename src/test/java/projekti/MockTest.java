@@ -148,10 +148,7 @@ public class MockTest {
     @WithMockUser(username = "alice", password = "salasana", roles = "USER")
     public void testGetMessagesContainsMessage() throws Exception {
         MvcResult res = mockMvc.perform(get("/api/messages")).andReturn();
-
         String content = res.getResponse().getContentAsString();
-        System.out.println("XXXXXXXXXX"+ content);
-
         Assert.assertTrue(content.contains("kirjoitukseni"));
     }
 
@@ -218,7 +215,6 @@ public class MockTest {
         
         res = mockMvc.perform(get("/api/follow")).andReturn();
         maplist = Arrays.asList(mapper.readValue(res.getResponse().getContentAsString(), Map[].class));
-        id = maplist.get(0).get("id").toString();
         Assert.assertTrue(maplist.get(0).get("follow").toString().contains("Ville Virtanen"));
         
         res = mockMvc.perform(get("/api/messages")).andReturn();

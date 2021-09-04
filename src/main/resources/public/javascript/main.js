@@ -73,8 +73,8 @@ function addComment(root, comment) {
     nameNode.innerHTML = comment.profile.fullname
     var nameColNode = divElementWithChild("col-sm-4", nameNode)
     var dateColNode = divElementWithChild("col-sm-4", document.createTextNode(formatDate(comment.date)))
-    nameRowNode.append(nameColNode)
-    nameRowNode.append(dateColNode)
+    nameRowNode.appendChild(nameColNode)
+    nameRowNode.appendChild(dateColNode)
     root.appendChild(nameRowNode)
 
     var messageNode = document.createElement("p")

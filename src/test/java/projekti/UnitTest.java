@@ -2,6 +2,7 @@ package projekti;
 
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.stream.Collectors.joining;
 import javax.transaction.Transactional;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,7 +20,6 @@ import projekti.follower.FollowerRepository;
 import projekti.message.Message;
 import projekti.message.MessageComment;
 import projekti.message.MessageCommentRepository;
-import projekti.message.MessageLike;
 import projekti.message.MessageLikeRepository;
 import projekti.message.MessageRepository;
 import projekti.message.MessageService;
@@ -117,15 +117,17 @@ public class UnitTest {
     }
 
     @Test
-    public void TestCommentsCount() {
-        List <MessageComment> m = messageCommentRepository.findAll();
-        assertEquals(2, m.size());
+    public void TestComments() {
+        String s = messageCommentRepository.findAll().stream().map(x -> x.getComment()).collect(joining(" "));
+        assertTrue(s.contains("hyva"));
+        assertTrue(s.contains("no jaa..."));
     }
        
     @Test
-    public void TestComments() {
-        List <MessageComment> mc = messageCommentRepository.findAll();
-        assertEquals(2, mc.size());
+    public void TestCommentsMessages() {
+        String s = messageCommentRepository.findAll().stream().map(x -> x.getMessage().getMessage()).collect(joining(" "));
+        assertTrue(s.contains("Toinen"));
+        assertFalse(s.contains("Tämä on ensimmäinen kirjoitukseni"));
     }
     
     private Profile createUser(String username, String password, String fullname, String profilename) {

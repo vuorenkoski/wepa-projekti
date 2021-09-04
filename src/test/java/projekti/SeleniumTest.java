@@ -6,17 +6,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.context.WebApplicationContext;
-
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Transactional
 public class SeleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
 
     @LocalServerPort
@@ -24,9 +22,6 @@ public class SeleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     
     private String address = "http://localhost:";
    
-    @Autowired
-    private WebApplicationContext context;
-    
     @Test
     public void testTooShortUsername() throws InterruptedException {
         goTo(address + port + "/signup");
@@ -64,7 +59,8 @@ public class SeleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     }
 
     @Test
-    public void testCanSignUpAndFollowUserAndLike() throws InterruptedException {
+    public void testCanSignUpAndFollowUserAndLikeAndComment() throws InterruptedException {
+//        System.setProperty("webdriver.chrome.driver");
         signUpAndSendMessage("roope", "Roope Ankka", "kroisos", "Missä Aku on?");
         find("#logout").click();
         TimeUnit.MILLISECONDS.sleep(100);
@@ -85,15 +81,18 @@ public class SeleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
         assertTrue(pageSource().contains("kinder or gentler"));
         assertFalse(pageSource().contains("1 tykkäystä"));
         find("#likeButton").first().click();
-        TimeUnit.MILLISECONDS.sleep(100);
+        TimeUnit.MILLISECONDS.sleep(300);
         assertTrue(pageSource().contains("1 tykkäystä"));
-//        find("textarea").last().fill().with("Jaaha?");
-//        find("#commentButton").last().click();
-//        TimeUnit.MILLISECONDS.sleep(100);
-//        goTo(address + port + "/users/realtrump");
-//        TimeUnit.MILLISECONDS.sleep(100);
-//        System.out.println(pageSource());
-//        assertTrue(pageSource().contains("Jaaha?"));
+        find("textarea").last().fill().with("Jaaha?");
+        find("#commentButton").last().click();
+        TimeUnit.MILLISECONDS.sleep(100);
+        goTo(address + port + "/users/realtrump");
+        find("#followersTab").click();
+        TimeUnit.MILLISECONDS.sleep(100);
+        find("#messageTab").click();
+
+        TimeUnit.MILLISECONDS.sleep(300);
+        assertTrue(pageSource().contains("Jaaha?"));
     }
     
     private void signUpAndSendMessage(String username, String fullname, String profilename, String message) throws InterruptedException {
