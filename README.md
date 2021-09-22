@@ -30,39 +30,39 @@ mvn compile exec:java -Dserver.port=8080 -Dexec.mainClass=projekti.MyApplication
 
 ### Rekisteröityminen ja kirjautuminen sisään
 
-Käyttääkseksi palvelua sinun tulee ensin kirjautua sisään. Tämä tapahtuu painamalla 'rekisteröidy' etusivulla. Rekisteröitymisessä sinun tulee luoda käyttäjätunnus (jota ei ole jo käytössä) sekä salasana. 
+Käyttääkseksi palvelua sinun tulee ensin kirjautua sisään. Tämä tapahtuu etusivulla painamalla 'rekisteröidy' tekstiä. Rekisteröitymisessä sinun tulee luoda käyttäjätunnus (jota ei ole jo käytössä) sekä salasana. 
 
-Rekisteröitymisen jälkeen sinut ohjataan kirjautumissivulle, jonne tulee syöttää juuri luodut tunnukset. Onnistuneen kirjautumisen jälkeen sinut ohjataan sivulle jossa sinultä kysytään nimesi ja profiilin nimi. Profiilinimi näkyy käyttäjän sivun osoitteessa. Profiilin nimessä tulee olla ävhintään viisi merkkiä (a-z).
+Rekisteröitymisen jälkeen sinut ohjataan kirjautumissivulle, jonne tulee syöttää juuri luodut tunnukset. Onnistuneen kirjautumisen jälkeen sinut ohjataan sivulle, jossa sinulta kysytään nimesi ja profiilin nimi. Profiilin nimi näkyy käyttäjän sivun osoitteessa. Profiilin nimessä tulee olla vähintään viisi merkkiä (a-z).
 
 ### Viestien lähettäminen
 
-Kirjautumisen jälkeen pääset pääsivulle. Voit julkaista viestin kirjoittamalla sne tekstikenttään ja painamalla 'Julkaisu uusi viesti' nappia.
+Kirjautumisen jälkeen pääset pääsivulle. Voit julkaista viestin kirjoittamalla sen tekstikenttään ja painamalla 'Julkaise uusi viesti' nappia.
 
 Näkymässä näkyy omat viestisi ja niiden käyttäjien viestit joita seuraat (25 uusinta). 
 
-Voit tykätä viestistä painamalla 'Tykkää' nappia. Voit tykätä viestistä vain kerran. Tykkäystä ei voi poistaa. Voit myös kommentoida omaa tai seurattavien käyttäjien viestejä kijroittamalla kommentin ja painamlla 'lähetä kommentti' nappia.
+Voit tykätä viestistä painamalla 'Tykkää' nappia. Voit tykätä viestistä vain kerran. Tykkäystä ei voi poistaa. Voit myös kommentoida omaa tai seurattavien käyttäjien viestejä kirjoittamalla kommentin kommenttien alla olevaan kenttään ja painamalla 'lähetä kommentti' nappia.
 
 ### Kuvien lisääminen
 
-Painamlla valikon tekstiä 'Kuva-albumi' pääset näkymään jossa voit selata omia kuvia sekä niiden käyttäjien kuvia joita seuraat. Kuva lähetetään painamalla ensin 'Valitse tiedosto' nappia. Avautuvasta ikkunasta valitse jpg muotoinen kuva tietokoneeltasi. Tämän jälkeen kirjoita kuvan kuvaus tekstikenttään (pakollinen). Lopuksi paina 'Julkaise uusi kuva'.
+Painamalla valikon tekstiä 'Kuva-albumi' pääset näkymään, jossa voit selata omia kuvia sekä niiden käyttäjien kuvia joita seuraat. Kuva lähetetään painamalla ensin 'Valitse tiedosto' nappia. Avautuvasta ikkunasta valitse jpg muotoinen kuva tietokoneeltasi. Tämän jälkeen kirjoita kuvan kuvaus tekstikenttään (pakollinen). Lopuksi paina 'Julkaise uusi kuva'.
 
-Albummiisi mahtuu vain 10 kuvaa. Voit poistaa kuvia painamalla kuvan kohdalla 'Poista' nappia. Voit asettaa kuvasi profiilikuvaksi painamalla 'Aseta profiilikuvaksi'. Profiilikuvaa ei voi poistaa. Sinun tulee ensi valita jokin muu kuva profiilikuvaksi ja poistaa kuva vasta sen jälkeen.
+Albumiisi mahtuu vain 10 kuvaa. Voit poistaa kuvia painamalla kuvan kohdalla 'Poista' nappia. Voit asettaa kuvasi profiilikuvaksi painamalla 'Aseta profiilikuvaksi'. Profiilikuvaa ei voi poistaa. Sinun tulee ensi valita jokin muu kuva profiilikuvaksi ja poistaa kuva vasta sen jälkeen.
 
 Kuvista voi tykätä ja niitä voi kommentoida samalla tavalla kuin viestejä.
 
 ### Käyttäjien seuraaminen
 
-Painamalla valikon tekstiä 'Seuraaminen' pääset näkymään jossa voit lisätä ja poistaa seurattavia käyttäjiä. Voit myös tarkastella ketkä seuraavat sinua ja tarvittaessa voi estää heitä seuraamasta (estetyt seuraajat eivät näe viestejäsi tai kuviasi).
+Painamalla valikon tekstiä 'Seuraaminen' pääset näkymään, jossa voit lisätä ja poistaa seurattavia käyttäjiä. Voit myös tarkastella ketkä seuraavat sinua ja tarvittaessa voit estää heitä seuraamasta (estetyt seuraajat eivät näe viestejäsi tai kuviasi).
 
-Käyttäjän lisääminen tapahtuu siten, että ensin haet käyttääjää nimellä tai nimen osalla. Hakusana kirjoitetaan tekstikenttään 'käyttäjän nimi'. Paina tämän jälkeen 'Hae seurattavia' nappia. Tämän jälkeen näet listan käyttäjistä jotka vastaavat hakukriteeriä. Voit lisätä käyttäjän seurattavaksi painamalla 'lisää' tekstiä.
+Käyttäjän lisääminen tapahtuu siten, että ensin haet käyttäjää nimellä tai nimen osalla. Hakusana kirjoitetaan tekstikenttään 'käyttäjän nimi'. Paina tämän jälkeen 'Hae seurattavia' nappia. Tämän jälkeen näet listan käyttäjistä, jotka vastaavat hakukriteeriä. Voit lisätä käyttäjän seurattavaksi painamalla nimen perässä olevaa 'lisää' tekstiä.
 
-Voit myös poistaa käyttäjiä seurannasta. Käyttäjät joita seuraat on listattu sivulla. Painamalla 'poista' tekstiä nimen perässä käyttäjä poistuu seurannasta.
+Voit myös poistaa käyttäjiä seurannasta. Seuraamasi käyttäjät on listattu sivulla. Käyttäjä poistuu seurannasta painamalla 'poista' tekstiä nimen perässä.
 
-Sivulla näkyy myös käyttäjät jotka seuraavat sinua. Voit estää käyttäjää seuraamasta painamalla 'estä' tekstiä nimen lopussa. Yliviivattu nimi on estetty. Voit mys poistaa eston painamalla 'poista esto'.
+Sivulla näkyy myös käyttäjät, jotka seuraavat sinua. Voit estää käyttäjää seuraamasta painamalla 'estä' tekstiä nimen lopussa. Yliviivattu nimi on estetty. Voit myös poistaa eston painamalla 'poista esto'.
 
 ### Asetukset
 
-Asetukset välilehdellä voit painaa muuta profiilin tietoja tekstiä. Tästä avautuu ikkuna jossa voit muuttaa nimeäsi ja profiilin nimeä. Välilehdeltä löytyy myös linkki ohjeisiin.
+Asetukset välilehdellä voit painaa 'muuta profiilin tietoja' tekstiä. Tästä avautuu ikkuna, jossa voit muuttaa nimeäsi ja profiilin nimeä. Välilehdeltä löytyy myös linkki ohjeisiin.
 
 ## Tietokantarakenne
 
