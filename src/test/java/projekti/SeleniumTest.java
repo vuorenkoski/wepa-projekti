@@ -60,7 +60,6 @@ public class SeleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
 
     @Test
     public void testCanSignUpAndFollowUserAndLikeAndComment() throws InterruptedException {
-//        System.setProperty("webdriver.chrome.driver");
         signUpAndSendMessage("roope", "Roope Ankka", "kroisos", "Missä Aku on?");
         find("#logout").click();
         TimeUnit.MILLISECONDS.sleep(100);

@@ -1,0 +1,86 @@
+Table Account {
+  id long [pk, increment]
+  password varchar
+  username varchar
+  profile_id long
+}
+
+Table Profile {
+  id long [pk, increment]
+  fullname varchar
+  profilename varchar
+  photo_id long
+}
+
+Table Photo {
+  id int [pk, increment]
+  profile_id long
+  description varchar
+  image byte[]
+  date timestamp
+  numberOfLikes int
+} 
+ 
+Table PhotoComment {
+  id int [pk, increment]
+  profile_id long
+  photo_id long
+  comment varchar
+  date timestamp
+} 
+
+Table PhotoLike {
+  id int [pk, increment]
+  profile_id long
+  photo_id long
+  date timestamp
+} 
+
+Table Message {
+  id int [pk, increment]
+  profile_id long
+  message varchar
+  date timestamp
+  numberOfLikes int
+} 
+ 
+Table MessageComment {
+  id int [pk, increment]
+  profile_id long
+  message_id long
+  comment varchar
+  date timestamp
+} 
+
+Table MessageLike {
+  id int [pk, increment]
+  profile_id long
+  message_id long
+  date timestamp
+} 
+
+Table Follower {
+  id int [pk, increment]
+  profile_id long
+  follow_id long
+  hidden boolean
+  date timestamp
+} 
+
+Ref: Account.profile_id - Profile.id
+Ref: Profile.photo_id - Photo.id
+Ref: Follower.profile_id - Profile.id
+Ref: Follower.follow_id - Profile.id
+
+
+Ref: Photo.profile_id > Profile.id
+Ref: PhotoComment.profile_id - Profile.id
+Ref: PhotoComment.photo_id > Photo.id
+Ref: PhotoLike.profile_id - Profile.id
+Ref: PhotoLike.photo_id > Photo.id
+
+Ref: Message.profile_id > Profile.id
+Ref: MessageComment.profile_id - Profile.id
+Ref: MessageComment.message_id > Message.id
+Ref: MessageLike.profile_id - Profile.id
+Ref: MessageLike.message_id > Message.id

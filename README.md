@@ -9,12 +9,27 @@ Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Dat
 
 [Sovellus herokussa](https://hidden-tundra-44605.herokuapp.com/)
 
-## tasks
+## Issues
 
-- Message-messageComment linkki ei näy testeissä
-- selenium testit herjaa document.prepend metodin puutteesta
+- selenium ei tunnista javascriptin metodia document.prepend. Vaihtaminen chrome-driveriin auttaisi? Selinium tulostaa virheilmoituksia mutta testit menevät kyllä läpi
 
-## Rajapinnan ultratiivis kuvaus
+## Test and run
+
+Testing
+```
+mvn test
+```
+
+Running
+```
+mvn compile exec:java -Dserver.port=8080 -Dexec.mainClass=projekti.MyApplication
+```
+
+## Tietokantarakenne
+
+[Tietokantarakenne](db_structure.png)
+
+## Rajapinnan tiivis kuvaus
 
 ### Data liikkuu json muodossa
 
