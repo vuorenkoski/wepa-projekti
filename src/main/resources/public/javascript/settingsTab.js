@@ -7,6 +7,14 @@ function settingsTab() {
     link.innerHTML = "Muuta profiilin tietoja"
     var linkRow = divElementWithChild("row", link)
     root.appendChild(linkRow)
+
+    var help = document.createElement("a")
+    help.href = "/help"
+    help.innerHTML = "Käyttöohjeet"
+    var helpRow = divElementWithChild("row", help)
+    root.appendChild(emptyRow())
+    root.appendChild(helpRow)
+
     root.appendChild(emptyRow())
     root.appendChild(emptyRow())
 }

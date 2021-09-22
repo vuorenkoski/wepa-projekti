@@ -127,4 +127,9 @@ public class AccountController {
         profile.setPhoto_id(id);
         return accountService.saveProfile(profile);
     }
+    
+    @GetMapping("help")
+    public String help() {
+        return "help";
+    }
 }

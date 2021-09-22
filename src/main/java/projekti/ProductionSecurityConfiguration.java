@@ -28,7 +28,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.formLogin().loginPage("/login").defaultSuccessUrl("/");
         
         http.authorizeRequests()
-                .antMatchers("/signup","/","/styles.css", "/login").permitAll()
+                .antMatchers("/signup","/","/styles.css", "/login", "/help").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().permitAll().and()
                 .logout().logoutSuccessUrl("/").permitAll();
