@@ -11,7 +11,7 @@ Toteutuskielet: Java ja Javascript (Spring framework, Thymeleaf, Bootstrap). Dat
 
 ## Issues
 
-- selenium ei tunnista javascriptin metodia document.prepend. Vaihtaminen chrome-driveriin auttaisi? Selinium tulostaa virheilmoituksia mutta testit menevät kyllä läpi
+- selenium ei tunnista javascriptin metodia document.prepend. Vaihtaminen chrome-driveriin auttaisi? Selenium tulostaa virheilmoituksia mutta testit menevät kyllä läpi
 
 ## Test and run
 
@@ -27,7 +27,7 @@ mvn compile exec:java -Dserver.port=8080 -Dexec.mainClass=projekti.MyApplication
 
 ## Tietokantarakenne
 
-[Tietokantarakenne](db_structure.png)
+![Tietokantarakenne](db_structure.png)
 
 ## Rajapinnan tiivis kuvaus
 
