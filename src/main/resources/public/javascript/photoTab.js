@@ -91,6 +91,7 @@ httpGetPhotos.onreadystatechange = function() {
     var addDescriptionNode = document.createElement("input")
     addDescriptionNode.setAttribute("type", "text")
     addDescriptionNode.setAttribute("name", "description")
+    addDescriptionNode.setAttribute("placeholder", "kuvaus")
     var p = document.createElement("p")
     p.appendChild(addDescriptionNode)
     addFormNode.appendChild(p)
